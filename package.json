@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --emptyOutDir",
+    "start": "node server.mjs",
     "preview": "vite preview",
     "deploy": "vite build --emptyOutDir && gh-pages -d dist"
   },

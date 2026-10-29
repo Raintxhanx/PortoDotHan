@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1
 
-# Image versions (global args, usable in every FROM below).
+# Image version (global arg, usable in every FROM below).
 ARG NODE_VERSION=22-alpine
-ARG NGINX_VERSION=1.30-alpine-slim
 
 # ─────────────────────────────────────────────────────────────
 # 1. Build the static site
@@ -21,21 +20,27 @@ COPY . .
 RUN npm run build
 
 # ─────────────────────────────────────────────────────────────
-# 2. Serve the bundle with NGINX as a non-root user (port 8080)
+# 2. Serve the bundle with Node (no runtime dependencies)
 # ─────────────────────────────────────────────────────────────
-FROM nginx/nginx-unprivileged:${NGINX_VERSION} AS runtime
+FROM node:${NODE_VERSION} AS runtime
 
-# SPA fallback, compression, cache policy and security headers.
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+ENV NODE_ENV=production \
+    PORT=8080 \
+    STATIC_ROOT=/app/dist
 
-# Ship only the compiled output — no sources, node_modules or build tooling.
-COPY --from=build --chown=nginx:nginx /app/dist /usr/share/nginx/html
+WORKDIR /app
+
+# Only the compiled output and the static server are shipped.
+COPY --from=build --chown=node:node /app/dist ./dist
+COPY --chown=node:node server.mjs ./
+
+USER node
 
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1
 
-STOPSIGNAL SIGQUIT
+STOPSIGNAL SIGTERM
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.mjs"]

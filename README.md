@@ -27,7 +27,7 @@ The site is a small, hand-built universe: a living shader orb, a drifting starfi
 | Styles | [Sass](https://sass-lang.com/) |
 | Type | Instrument Serif, Space Grotesk, JetBrains Mono |
 | Audio | WebAudio API (no files) |
-| Deploy | `gh-pages` / Docker + NGINX |
+| Deploy | `gh-pages` / Docker (Node) |
 
 ## 🚀 Run it
 
@@ -40,7 +40,7 @@ Open the printed local URL. To build for production:
 
 ```bash
 npm run build
-npm run preview
+npm start     # serves dist/ on http://localhost:8080
 ```
 
 Deploy to GitHub Pages:
@@ -53,27 +53,45 @@ The build uses relative asset paths (`base: './'`), so it also works from a subd
 
 ### 🐳 Docker (production)
 
-The image is a multi-stage build: Vite compiles the site, then NGINX serves the static output as a non-root user on port `8080`. Use `npm run dev` for hot reload; the container always serves the production build.
+The image is a multi-stage build: Vite compiles the site, then a small dependency-free Node server (`server.mjs`) serves the static output as a non-root user on port `8080`. Use `npm run dev` for hot reload; the container always serves the production build.
 
 ```bash
 docker compose build
 docker compose up -d
 ```
 
-The site is then available at <http://localhost:8091>. To publish a different port, set `APP_PORT` in a `.env` file (or your shell) before starting:
+The port is published to `127.0.0.1:8091` only, so the site is not exposed to the network. Point your Cloudflare Tunnel at it:
+
+```bash
+cloudflared tunnel --url http://localhost:8091
+```
+
+Or in a tunnel config (`~/.cloudflared/config.yml`):
+
+```yaml
+ingress:
+  - hostname: example.com
+    service: http://localhost:8091
+  - service: http_status:404
+```
+
+If `cloudflared` later runs as a container on this Compose network, point it at the service directly (`http://web:8080`) and skip the host port entirely.
+
+Set `APP_PORT` to publish a different port. If the tunnel or a proxy runs in another container/network and needs to reach it from outside the host, set `BIND_ADDR=0.0.0.0`:
 
 ```dotenv
 APP_PORT=3000
+BIND_ADDR=0.0.0.0
 ```
 
 Stop it with `docker compose down`. Without Compose:
 
 ```bash
 docker build -t portodothan .
-docker run --rm -p 8091:8080 portodothan
+docker run --rm -p 127.0.0.1:8091:8080 portodothan
 ```
 
-The container runs with a read-only filesystem, no Linux capabilities and a health check on `/healthz`. `nginx/default.conf` handles SPA routing, gzip, long-lived caching for hashed assets and basic security headers. If TLS is terminated by a reverse proxy in front of it, add HSTS there.
+The container runs with a read-only filesystem, no Linux capabilities and a health check on `/healthz`. `server.mjs` handles SPA routing, long-lived caching for hashed assets, ETags and byte ranges for audio; TLS and compression are handled by Cloudflare.
 
 ## 🗂 Structure
 

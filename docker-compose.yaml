@@ -1,9 +1,11 @@
-# Production stack: build the static bundle and serve it with NGINX.
+# Production stack: build the static bundle and serve it with Node.
 #
 #   docker compose build
 #   docker compose up -d
 #
-# Override the published port with APP_PORT (defaults to 8091).
+# The published port is bound to 127.0.0.1 by default, so the site is only
+# reachable through the Cloudflare Tunnel on this host.
+# Override APP_PORT or BIND_ADDR (e.g. 0.0.0.0) when needed.
 
 name: portodothan
 
@@ -15,10 +17,12 @@ services:
     image: portodothan:latest
     container_name: portodothan
     ports:
-      - "${APP_PORT:-8091}:8080"
+      - "${BIND_ADDR:-127.0.0.1}:${APP_PORT:-8091}:8080"
+    environment:
+      PORT: "8080"
     restart: unless-stopped
 
-    # The image runs as an unprivileged user and never writes to disk.
+    # The container runs as a non-root user and never writes to disk.
     read_only: true
     tmpfs:
       - /tmp:size=16m,mode=1777
