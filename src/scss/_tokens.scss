@@ -1,0 +1,26 @@
+:root {
+  --ink: #07080c;
+  --ink-soft: #0a0c12;
+  --ink-card: #080a10;
+  --bone: #f1ede3;
+  --bone-dim: #cbc7bb;
+  --muted: #8b8d8c;
+  --line: rgba(241, 237, 227, 0.13);
+  --line-strong: rgba(241, 237, 227, 0.26);
+  --gold: #e3b263;
+  --cyan: #79d7d0;
+  --violet: #9c8cf6;
+
+  --serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --sans: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --pad: clamp(20px, 4vw, 64px);
+  --max: 1560px;
+
+  --glow-a: 227 178 99;
+  --glow-b: 121 215 208;
+}

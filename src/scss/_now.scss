@@ -1,0 +1,217 @@
+.now__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.now-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(360px, 36vw, 440px);
+  padding: clamp(24px, 3vw, 40px);
+  background: var(--ink-card);
+  overflow: hidden;
+}
+
+.now-card__label {
+  color: var(--gold);
+  font-size: 8px;
+  margin-bottom: clamp(30px, 5vw, 56px);
+}
+
+.now-card__title {
+  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.now-card__title em {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.now-card > p {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 34ch;
+}
+
+.now-card__list {
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+}
+
+.now-card__list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 10.5px;
+  color: var(--bone-dim);
+}
+
+.now-card__list .mono {
+  font-size: 7px;
+  color: var(--muted);
+}
+
+.now-card--wish {
+  background:
+    radial-gradient(120% 90% at 80% 0%, rgba(227, 178, 99, 0.09), transparent 60%),
+    var(--ink-card);
+}
+
+.now-card--wish::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  right: -40%;
+  width: 80%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(227, 178, 99, 0.14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.wish {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  margin-top: 26px;
+  padding: 12px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 99px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.4s ease,
+    color 0.4s ease,
+    background 0.4s ease;
+}
+
+.wish:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(227, 178, 99, 0.06);
+}
+
+.wish__star {
+  color: var(--gold);
+  font-size: 12px;
+  line-height: 1;
+  transition: transform 0.8s var(--ease);
+}
+
+.wish:hover .wish__star {
+  transform: rotate(180deg) scale(1.15);
+}
+
+.wish.is-pulling .wish__star {
+  animation: wishSpin 0.8s var(--ease);
+}
+
+@keyframes wishSpin {
+  to {
+    transform: rotate(540deg) scale(1.4);
+  }
+}
+
+.wish__result {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 40px);
+  background: rgba(8, 10, 16, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s var(--ease),
+    visibility 0s linear 0.6s;
+}
+
+.wish__result.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.6s var(--ease),
+    visibility 0s linear 0s;
+}
+
+.wish__rarity {
+  color: var(--gold);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+}
+
+.wish__quote {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: var(--bone);
+}
+
+.wish__result::after {
+  content: 'Tap to close';
+  position: absolute;
+  left: clamp(24px, 3vw, 40px);
+  bottom: 24px;
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.wish__result::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.8;
+}
+
+.now__marquee {
+  margin-top: clamp(60px, 8vw, 100px);
+}
+
+.now__marquee .marquee__track {
+  animation-direction: reverse;
+  animation-duration: 56s;
+}
+
+.now__marquee .marquee__track span {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: var(--bone-dim);
+}

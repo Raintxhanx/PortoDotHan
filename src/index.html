@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Raihan Fathoni — AI, Backend &amp; Data</title>
+    <meta
+      name="description"
+      content="Raihan Fathoni (@raintxhanx) — an ordinary human building small, useful things with AI, backend engineering and data. Student at Gunadarma University, Indonesia."
+    />
+    <meta name="author" content="Raihan Fathoni" />
+    <meta name="theme-color" content="#07080c" />
+    <meta property="og:title" content="Raihan Fathoni — AI, Backend & Data" />
+    <meta
+      property="og:description"
+      content="An ordinary human, happy with small things. Building with AI, backend engineering and data from Indonesia."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./img/avatar.webp" />
+    <link rel="icon" type="image/svg+xml" href="./img/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./scss/style.scss" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Raihan Fathoni",
+        "alternateName": "raintxhanx",
+        "description": "An ordinary human, happy with small things. Student, beginner developer and open-source contributor working across AI, backend engineering and data.",
+        "email": "mailto:raintxhanx@gmail.com",
+        "url": "https://github.com/Raintxhanx",
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Gunadarma University"
+        },
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Backend Engineering",
+          "Data Analysis",
+          "Python",
+          "Java",
+          "Go",
+          "PyTorch",
+          "TensorFlow"
+        ],
+        "sameAs": [
+          "https://github.com/Raintxhanx",
+          "https://www.linkedin.com/in/raintxhanx/",
+          "https://www.youtube.com/@raintxhanx",
+          "https://www.instagram.com/raintxhanx/",
+          "https://myanimelist.net/profile/raintxhanx"
+        ]
+      }
+    </script>
+    <script type="module" defer src="./js/index.js"></script>
+    <noscript>
+      <style>
+        .loader, .cursor, .grain { display: none !important; }
+        body { overflow: auto !important; }
+        [data-reveal] { opacity: 1 !important; transform: none !important; }
+        .hero__word, .hero__line--serif em { transform: none !important; clip-path: none !important; }
+      </style>
+    </noscript>
+  </head>
+  <body class="is-loading">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <div class="ambient" aria-hidden="true">
+      <div class="ambient__glow ambient__glow--a"></div>
+      <div class="ambient__glow ambient__glow--b"></div>
+      <div class="ambient__grid"></div>
+    </div>
+
+    <canvas class="scene" aria-hidden="true"></canvas>
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"><span class="cursor__label"></span></div>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+    <div class="loader" id="loader">
+      <div class="loader__inner">
+        <div class="loader__top">
+          <span class="mono">Portfolio — 2026</span>
+          <span class="mono">JKT / UTC+7</span>
+        </div>
+        <div class="loader__name">
+          Raihan <em>Fathoni</em>
+        </div>
+        <div class="loader__bar"><span id="loader-bar"></span></div>
+        <div class="loader__bottom">
+          <span class="mono">Loading small things</span>
+          <span class="mono"><b id="load-count">00</b>%</span>
+        </div>
+      </div>
+    </div>
+
+    <header class="nav" id="nav">
+      <a class="nav__brand" href="#intro" aria-label="Raihan Fathoni — home" data-magnetic>
+        <span class="nav__mark">RF</span>
+        <span class="nav__pulse" aria-hidden="true"></span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#about" data-nav="about"><span>01</span>About</a>
+        <a href="#toolkit" data-nav="toolkit"><span>02</span>Toolkit</a>
+        <a href="#work" data-nav="work"><span>03</span>Work</a>
+        <a href="#now" data-nav="now"><span>04</span>Now</a>
+        <a href="#contact" data-nav="contact"><span>05</span>Contact</a>
+      </nav>
+
+      <div class="nav__right">
+        <span class="nav__time mono" id="nav-time">--:-- WIB</span>
+        <button class="sound" id="sound" type="button" aria-pressed="false" aria-label="Toggle ambient sound">
+          <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="sound__text mono">Sound</span>
+        </button>
+        <button class="nav__menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
+          <span class="mono">Menu</span>
+          <span class="nav__burger" aria-hidden="true"><i></i><i></i></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="menu" id="menu" aria-hidden="true">
+      <div class="menu__inner wrap">
+        <div class="menu__head">
+          <span class="mono">Navigation — 05</span>
+          <span class="mono">Raihan Fathoni</span>
+        </div>
+        <p class="menu__note">An ordinary human,<br /><em>happy with small things.</em></p>
+        <nav class="menu__links" aria-label="Mobile">
+          <a href="#about" style="--i: 0"><span class="mono">01</span> About</a>
+          <a href="#toolkit" style="--i: 1"><span class="mono">02</span> Toolkit</a>
+          <a href="#work" style="--i: 2"><span class="mono">03</span> Work</a>
+          <a href="#now" style="--i: 3"><span class="mono">04</span> Now</a>
+          <a href="#contact" style="--i: 4"><span class="mono">05</span> Contact</a>
+        </nav>
+        <div class="menu__foot">
+          <a href="mailto:raintxhanx@gmail.com">raintxhanx@gmail.com</a>
+          <div class="menu__socials">
+            <a href="https://github.com/Raintxhanx" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/raintxhanx/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.youtube.com/@raintxhanx" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://www.instagram.com/raintxhanx/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- ───────────────────────── HERO ───────────────────────── -->
+      <section class="hero" id="intro" data-scene="hero" aria-labelledby="hero-title">
+        <div class="hero__inner wrap">
+          <div class="hero__top">
+            <p class="eyebrow" data-reveal>
+              <span class="eyebrow__dot"></span>
+              AI engineering · Backend · Data
+            </p>
+            <p class="hero__kicker mono" data-reveal style="--d: 0.1s">Portfolio / Vol. 01</p>
+          </div>
+
+          <h1 class="hero__title" id="hero-title">
+            <span class="hero__line"><span class="hero__word">Raihan</span></span>
+            <span class="hero__line hero__line--serif">
+              <em>Fathoni</em>
+              <svg class="hero__spark" viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43 Z" />
+              </svg>
+            </span>
+          </h1>
+
+          <div class="hero__foot">
+            <div class="hero__intro">
+              <p class="hero__lede" data-reveal style="--d: 0.2s">
+                An ordinary human, happy with <em>small things.</em> I build quiet,
+                useful software with AI, backend engineering and data — and I ask
+                too many questions about how the world works.
+              </p>
+              <div class="hero__actions" data-reveal style="--d: 0.3s">
+                <a class="btn" href="#work" data-magnetic data-cursor="explore">
+                  <span>Selected work</span>
+                  <span class="btn__arrow">↘</span>
+                </a>
+                <a class="link-underline" href="mailto:raintxhanx@gmail.com" data-cursor="copy">
+                  raintxhanx@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <dl class="hero__meta" data-reveal style="--d: 0.35s">
+              <div>
+                <dt class="mono">Based in</dt>
+                <dd>Indonesia <span class="muted">· UTC+7</span></dd>
+              </div>
+              <div>
+                <dt class="mono">Local time</dt>
+                <dd id="hero-time">--:--:--</dd>
+              </div>
+              <div>
+                <dt class="mono">Status</dt>
+                <dd><span class="status-dot"></span>Open to collaborate</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="hero__scroll" aria-hidden="true">
+          <span class="mono">Scroll</span>
+          <i></i>
+        </div>
+
+        <div class="marquee marquee--hero" aria-hidden="true">
+          <div class="marquee__track">
+            <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+            <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+            <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+            <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+            <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────── ABOUT ───────────────────────── -->
+      <section class="section about" id="about" data-scene="about" aria-labelledby="about-title">
+        <div class="wrap">
+          <header class="sec-head" data-reveal>
+            <span class="sec-head__index mono">01 / About</span>
+            <h2 class="sec-head__title" id="about-title">The ordinary <em>human.</em></h2>
+            <span class="sec-head__note mono">Gunadarma University</span>
+          </header>
+
+          <div class="about__grid">
+            <figure class="portrait" data-reveal>
+              <div class="portrait__frame" data-tilt>
+                <img
+                  src="./img/avatar.webp"
+                  alt="Raihan Fathoni holding a small controlled flame during a science show"
+                  width="460"
+                  height="460"
+                  loading="lazy"
+                />
+                <span class="portrait__scan" aria-hidden="true"></span>
+                <span class="portrait__tag mono">Fig. 01 — Curiosity, ignited</span>
+              </div>
+              <figcaption class="portrait__cap">
+                <span class="mono">Raihan Fathoni / @raintxhanx</span>
+                <span class="mono muted">Probably setting something on fire.</span>
+              </figcaption>
+              <div class="stamp" aria-hidden="true">
+                <svg viewBox="0 0 120 120">
+                  <defs>
+                    <path id="stamp-path" d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0" />
+                  </defs>
+                  <text>
+                    <textPath href="#stamp-path">OPEN TO COLLABORATE · SMALL THINGS · </textPath>
+                  </text>
+                </svg>
+                <span class="stamp__star">✦</span>
+              </div>
+            </figure>
+
+            <div class="about__body">
+              <blockquote class="quote" data-reveal>
+                <p lang="id">“Hanya manusia biasa yang bahagia dengan hal-hal kecil.”</p>
+                <cite class="mono">Just an ordinary human, happy with small things.</cite>
+              </blockquote>
+
+              <div class="about__text" data-reveal style="--d: 0.1s">
+                <p>
+                  I’m <strong>Raihan Fathoni</strong>, a student at
+                  <a href="https://campus.quipper.com/directory/universitas-gunadarma" target="_blank" rel="noopener">Gunadarma University</a>
+                  and a beginner developer currently diving into <strong>AI development</strong>,
+                  <strong>backend engineering</strong> and <strong>data analysis</strong>.
+                </p>
+                <p>
+                  My curiosity refuses to stay in one lane. I make projects about
+                  mathematics, science and music, contribute to open source, and
+                  occasionally disappear into a spreadsheet for six hours. One of my
+                  favourite tools is still <strong>Excel</strong> — not just for data,
+                  but for theory crafting game mechanics.
+                </p>
+                <p>
+                  I like software that feels small, deliberate and quietly useful.
+                  The kind you don’t notice until it saves someone an afternoon.
+                </p>
+              </div>
+
+              <div class="stats" data-reveal style="--d: 0.2s">
+                <div class="stat">
+                  <span class="stat__num">11</span>
+                  <span class="stat__label mono">Public repositories</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__num">03</span>
+                  <span class="stat__label mono">Core languages</span>
+                </div>
+                <div class="stat">
+                  <span class="stat__num">∞</span>
+                  <span class="stat__label mono">Questions asked</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────── TOOLKIT ───────────────────────── -->
+      <section class="section toolkit" id="toolkit" data-scene="toolkit" aria-labelledby="toolkit-title">
+        <div class="wrap">
+          <header class="sec-head" data-reveal>
+            <span class="sec-head__index mono">02 / Toolkit</span>
+            <h2 class="sec-head__title" id="toolkit-title">Tools I <em>reach for.</em></h2>
+            <span class="sec-head__note mono">Honest levels only</span>
+          </header>
+
+          <p class="toolkit__intro" data-reveal>
+            A small, growing collection. Some are daily companions, some are
+            currently being wrestled with — I’d rather show the learning than fake
+            the mastery.
+          </p>
+
+          <div class="skills" data-reveal>
+            <article class="skill">
+              <span class="skill__index mono">01</span>
+              <h3 class="skill__name">Python</h3>
+              <p class="skill__note">Data, AI and the occasional script that saves a whole afternoon.</p>
+              <span class="skill__level mono">Daily driver</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">02</span>
+              <h3 class="skill__name">Java</h3>
+              <p class="skill__note">Object-oriented foundations, coursework and clean structure.</p>
+              <span class="skill__level mono">Learning</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">03</span>
+              <h3 class="skill__name">Go</h3>
+              <p class="skill__note">A newer language in the bag — small binaries, clear concurrency.</p>
+              <span class="skill__level mono">Exploring</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">04</span>
+              <h3 class="skill__name">PyTorch</h3>
+              <p class="skill__note">Training wheels on. Models, tensors and a lot of reading.</p>
+              <span class="skill__level mono">Beginner</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">05</span>
+              <h3 class="skill__name">TensorFlow</h3>
+              <p class="skill__note">The other path into deep learning — still finding my footing.</p>
+              <span class="skill__level mono">Beginner</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">06</span>
+              <h3 class="skill__name">MySQL</h3>
+              <p class="skill__note">Schemas, queries and the quiet satisfaction of a tidy database.</p>
+              <span class="skill__level mono">Comfortable</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">07</span>
+              <h3 class="skill__name">PyQt</h3>
+              <p class="skill__note">Desktop apps that make abstract data structures feel tangible.</p>
+              <span class="skill__level mono">Practical</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+            <article class="skill">
+              <span class="skill__index mono">08</span>
+              <h3 class="skill__name">Excel</h3>
+              <p class="skill__note">Not a joke. Spreadsheets are my theory-crafting engine.</p>
+              <span class="skill__level mono">Suspiciously good</span>
+              <span class="skill__bg" aria-hidden="true"></span>
+            </article>
+          </div>
+
+          <div class="toolkit__also" data-reveal>
+            <span class="mono">Also in the bag</span>
+            <ul>
+              <li>Git</li>
+              <li>VS Code</li>
+              <li>Matplotlib</li>
+              <li>JavaScript</li>
+              <li>GitHub</li>
+              <li>Curiosity</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────── WORK ───────────────────────── -->
+      <section class="section work" id="work" data-scene="work" aria-labelledby="work-title">
+        <div class="wrap">
+          <header class="sec-head" data-reveal>
+            <span class="sec-head__index mono">03 / Work</span>
+            <h2 class="sec-head__title" id="work-title">Small things, <em>built well.</em></h2>
+            <span class="sec-head__note mono">06 selected projects</span>
+          </header>
+
+          <div class="work__list">
+            <article class="project project--feature" data-reveal>
+              <a class="project__media" href="https://github.com/Raintxhanx/GravidaCompan.io" target="_blank" rel="noopener" data-cursor="view" data-tilt aria-label="Open GravidaCompan.io on GitHub">
+                <img src="./img/projects/gravida.webp" alt="GravidaCompan.io pregnancy monitoring dashboard" width="1400" height="689" loading="lazy" />
+                <span class="project__badge mono">Featured · AI</span>
+                <span class="project__view mono">View project ↗</span>
+              </a>
+              <div class="project__info">
+                <div class="project__head">
+                  <span class="project__num mono">01</span>
+                  <span class="project__year mono">Healthcare / Web</span>
+                </div>
+                <h3 class="project__title">GravidaCompan.io</h3>
+                <p class="project__desc">
+                  A web platform for integrated pregnancy monitoring and early risk
+                  detection, powered by AI. It connects expectant mothers with
+                  obstetricians for online consultation, continuous guidance and
+                  personalised support through the whole pregnancy.
+                </p>
+                <ul class="tags">
+                  <li>AI</li><li>Healthcare</li><li>Web platform</li><li>LLM</li>
+                </ul>
+                <a class="project__link" href="https://github.com/Raintxhanx/GravidaCompan.io" target="_blank" rel="noopener">
+                  <span>github.com/Raintxhanx</span><span class="arrow">↗</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="project project--feature" data-reveal>
+              <a class="project__media" href="https://github.com/Raintxhanx/GravidaChatbot" target="_blank" rel="noopener" data-cursor="view" data-tilt aria-label="Open GravidaChatbot on GitHub">
+                <img src="./img/projects/gravida-chatbot.webp" alt="GravidaChatbot LLM architecture comparison visualisation" width="1400" height="1045" loading="lazy" />
+                <span class="project__badge mono">Featured · LLM</span>
+                <span class="project__view mono">View project ↗</span>
+              </a>
+              <div class="project__info">
+                <div class="project__head">
+                  <span class="project__num mono">02</span>
+                  <span class="project__year mono">Maternal health / NLP</span>
+                </div>
+                <h3 class="project__title">GravidaChatbot</h3>
+                <p class="project__desc">
+                  An LLM-powered medical Q&amp;A system for expectant mothers,
+                  focused on preventive health education and stunting prevention.
+                  It runs entirely in Bahasa Indonesia and stays grounded in
+                  maternal health — pregnancy, prenatal, childbirth and postpartum.
+                </p>
+                <ul class="tags">
+                  <li>LLM</li><li>Bahasa Indonesia</li><li>Public health</li><li>RAG</li>
+                </ul>
+                <a class="project__link" href="https://github.com/Raintxhanx/GravidaChatbot" target="_blank" rel="noopener">
+                  <span>github.com/Raintxhanx</span><span class="arrow">↗</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <a class="project__media" href="https://github.com/Raintxhanx/Interactive-Campus-Map" target="_blank" rel="noopener" data-cursor="view" data-tilt aria-label="Open Interactive Campus Map on GitHub">
+                <img src="./img/projects/campus-map.webp" alt="Interactive Campus Map interface showing Indonesian campuses" width="1280" height="720" loading="lazy" />
+                <span class="project__badge mono">Web / Data</span>
+                <span class="project__view mono">View project ↗</span>
+              </a>
+              <div class="project__info">
+                <div class="project__head">
+                  <span class="project__num mono">03</span>
+                  <span class="project__year mono">JavaScript / Maps</span>
+                </div>
+                <h3 class="project__title">Interactive Campus Map</h3>
+                <p class="project__desc">
+                  A prototype web app that maps the distribution of campuses across
+                  Indonesia. Add new entries, filter by your own criteria, and watch
+                  the database turn into a living map.
+                </p>
+                <ul class="tags"><li>JavaScript</li><li>Mapping</li><li>CRUD</li></ul>
+                <a class="project__link" href="https://github.com/Raintxhanx/Interactive-Campus-Map" target="_blank" rel="noopener">
+                  <span>github.com/Raintxhanx</span><span class="arrow">↗</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <a class="project__media" href="https://github.com/Raintxhanx/Personal-Discord-Bot" target="_blank" rel="noopener" data-cursor="view" data-tilt aria-label="Open Personal Discord Bot on GitHub">
+                <img src="./img/projects/discord-bot.webp" alt="Personal Discord Bot showing a Genshin Impact wish simulation" width="1400" height="788" loading="lazy" />
+                <span class="project__badge mono">Python / Fun</span>
+                <span class="project__view mono">View project ↗</span>
+              </a>
+              <div class="project__info">
+                <div class="project__head">
+                  <span class="project__num mono">04</span>
+                  <span class="project__year mono">Python / Discord</span>
+                </div>
+                <h3 class="project__title">Personal Discord Bot</h3>
+                <p class="project__desc">
+                  A bot that automates the small chores in my server — and, more
+                  importantly, simulates Genshin Impact’s pull mechanics. Part
+                  utility, part shrine to probability.
+                </p>
+                <ul class="tags"><li>Python</li><li>Discord API</li><li>Gacha</li></ul>
+                <a class="project__link" href="https://github.com/Raintxhanx/Personal-Discord-Bot" target="_blank" rel="noopener">
+                  <span>github.com/Raintxhanx</span><span class="arrow">↗</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <a class="project__media" href="https://github.com/Raintxhanx/Linked-List-Visualizer" target="_blank" rel="noopener" data-cursor="view" data-tilt aria-label="Open Linked List Visualizer on GitHub">
+                <img src="./img/projects/linked-list.webp" alt="Linked List Visualizer desktop application" width="1096" height="671" loading="lazy" />
+                <span class="project__badge mono">PyQt / Education</span>
+                <span class="project__view mono">View project ↗</span>
+              </a>
+              <div class="project__info">
+                <div class="project__head">
+                  <span class="project__num mono">05</span>
+                  <span class="project__year mono">Python / Desktop</span>
+                </div>
+                <h3 class="project__title">Linked List Visualizer</h3>
+                <p class="project__desc">
+                  A PyQt desktop application that makes a linked list visible.
+                  Insert, delete and manipulate nodes, and the structure redraws
+                  itself in real time — data structures you can actually see.
+                </p>
+                <ul class="tags"><li>Python</li><li>PyQt</li><li>Data structures</li></ul>
+                <a class="project__link" href="https://github.com/Raintxhanx/Linked-List-Visualizer" target="_blank" rel="noopener">
+                  <span>github.com/Raintxhanx</span><span class="arrow">↗</span>
+                </a>
+              </div>
+            </article>
+
+            <article class="project" data-reveal>
+              <a class="project__media" href="https://github.com/Raintxhanx/Excel-Sheet-Extraction-" target="_blank" rel="noopener" data-cursor="view" data-tilt aria-label="Open Excel Sheet Extraction on GitHub">
+                <img src="./img/projects/excel.webp" alt="Excel Sheet Extraction tool interface" width="1400" height="765" loading="lazy" />
+                <span class="project__badge mono">Automation / Excel</span>
+                <span class="project__view mono">View project ↗</span>
+              </a>
+              <div class="project__info">
+                <div class="project__head">
+                  <span class="project__num mono">06</span>
+                  <span class="project__year mono">Python / Utility</span>
+                </div>
+                <h3 class="project__title">Excel Sheet Extraction</h3>
+                <p class="project__desc">
+                  A Windows executable that scans a chosen column for a keyword,
+                  then splits the matching rows into their own dedicated sheets.
+                  Unglamorous, specific, and exactly the kind of small tool I love.
+                </p>
+                <ul class="tags"><li>Python</li><li>PyQt</li><li>Automation</li></ul>
+                <a class="project__link" href="https://github.com/Raintxhanx/Excel-Sheet-Extraction-" target="_blank" rel="noopener">
+                  <span>github.com/Raintxhanx</span><span class="arrow">↗</span>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <a class="work__more" href="https://github.com/Raintxhanx?tab=repositories" target="_blank" rel="noopener" data-reveal data-magnetic>
+            <span class="mono">There is more on GitHub</span>
+            <span class="work__more-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ───────────────────────── NOW ───────────────────────── -->
+      <section class="section now" id="now" data-scene="now" aria-labelledby="now-title">
+        <div class="wrap">
+          <header class="sec-head" data-reveal>
+            <span class="sec-head__index mono">04 / Now</span>
+            <h2 class="sec-head__title" id="now-title">Lately, <em>quietly.</em></h2>
+            <span class="sec-head__note mono">Updated 2026</span>
+          </header>
+
+          <div class="now__grid">
+            <article class="now-card" data-reveal>
+              <span class="now-card__label mono">Studying</span>
+              <h3 class="now-card__title">Gunadarma<br /><em>University</em></h3>
+              <p>
+                Object-oriented programming and AI engineering, one semester at a
+                time. Currently trying to make the theory stick.
+              </p>
+              <ul class="now-card__list">
+                <li><span class="mono">Focus</span> OOP · AI Engineering</li>
+                <li><span class="mono">Next</span> Better models, smaller tools</li>
+              </ul>
+            </article>
+
+            <article class="now-card" data-reveal style="--d: 0.08s">
+              <span class="now-card__label mono">Building</span>
+              <h3 class="now-card__title">The Gravida<br /><em>suite</em></h3>
+              <p>
+                A maternal health platform and its Bahasa Indonesia LLM companion.
+                The project where code, care and consequence meet.
+              </p>
+              <ul class="now-card__list">
+                <li><span class="mono">Stack</span> Python · LLM · Web</li>
+                <li><span class="mono">Why</span> Small tools, real stakes</li>
+              </ul>
+            </article>
+
+            <article class="now-card now-card--wish" data-reveal style="--d: 0.16s" id="wish-card">
+              <span class="now-card__label mono">Off-screen</span>
+              <h3 class="now-card__title">Theory<br /><em>crafting</em></h3>
+              <p>
+                Excel, game mechanics, music and mathematics. My favourite kind of
+                rabbit hole is the one with a spreadsheet at the bottom.
+              </p>
+              <button class="wish" id="wish" type="button" data-magnetic data-cursor="wish">
+                <span class="wish__star" aria-hidden="true">✦</span>
+                <span class="wish__text mono">Pull a wish</span>
+              </button>
+              <div class="wish__result" id="wish-result" aria-live="polite">
+                <span class="wish__rarity mono">5★ insight</span>
+                <p class="wish__quote"></p>
+              </div>
+            </article>
+          </div>
+
+          <div class="now__marquee marquee" aria-hidden="true">
+            <div class="marquee__track">
+              <span>Theorycrafting</span><i>✦</i><span>Mathematics</span><i>✦</i>
+              <span>Music</span><i>✦</i><span>Open source</span><i>✦</i>
+              <span>Genshin Impact</span><i>✦</i><span>Spreadsheets</span><i>✦</i>
+              <span>Theorycrafting</span><i>✦</i><span>Mathematics</span><i>✦</i>
+              <span>Music</span><i>✦</i><span>Open source</span><i>✦</i>
+              <span>Genshin Impact</span><i>✦</i><span>Spreadsheets</span><i>✦</i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────── CONTACT ───────────────────────── -->
+      <section class="section contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
+        <div class="wrap">
+          <header class="sec-head" data-reveal>
+            <span class="sec-head__index mono">05 / Contact</span>
+            <span class="sec-head__note mono">No forms. Just an email.</span>
+          </header>
+
+          <h2 class="contact__title" id="contact-title">
+            Let’s build something<br />
+            <em>small that matters.</em>
+          </h2>
+
+          <div class="contact__grid">
+            <div class="contact__mail" data-reveal>
+              <span class="mono">Write to me</span>
+              <a class="contact__email" href="mailto:raintxhanx@gmail.com" data-cursor="email">
+                raintxhanx<wbr />@gmail.com
+                <span class="contact__email-arrow">↗</span>
+              </a>
+              <button class="copy-btn" id="copy-email" type="button" data-copy="raintxhanx@gmail.com" data-cursor="copy">
+                <span class="mono">Copy address</span>
+              </button>
+            </div>
+
+            <div class="contact__aside" data-reveal style="--d: 0.1s">
+              <p>
+                Open to open-source collaboration, internships, and conversations
+                about AI, data, mathematics or music. I reply faster than my models
+                train.
+              </p>
+              <div class="contact__status">
+                <span class="status-dot"></span>
+                <span class="mono">Available for collaboration</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="socials" data-reveal>
+            <a href="https://github.com/Raintxhanx" target="_blank" rel="noopener" class="social" data-cursor="open">
+              <span class="social__index mono">01</span>
+              <span class="social__name">GitHub</span>
+              <span class="social__handle mono">@Raintxhanx</span>
+              <span class="social__arrow">↗</span>
+            </a>
+            <a href="https://www.linkedin.com/in/raintxhanx/" target="_blank" rel="noopener" class="social" data-cursor="open">
+              <span class="social__index mono">02</span>
+              <span class="social__name">LinkedIn</span>
+              <span class="social__handle mono">in/raintxhanx</span>
+              <span class="social__arrow">↗</span>
+            </a>
+            <a href="https://www.youtube.com/@raintxhanx" target="_blank" rel="noopener" class="social" data-cursor="open">
+              <span class="social__index mono">03</span>
+              <span class="social__name">YouTube</span>
+              <span class="social__handle mono">@raintxhanx</span>
+              <span class="social__arrow">↗</span>
+            </a>
+            <a href="https://www.instagram.com/raintxhanx/" target="_blank" rel="noopener" class="social" data-cursor="open">
+              <span class="social__index mono">04</span>
+              <span class="social__name">Instagram</span>
+              <span class="social__handle mono">@raintxhanx</span>
+              <span class="social__arrow">↗</span>
+            </a>
+            <a href="https://myanimelist.net/profile/raintxhanx" target="_blank" rel="noopener" class="social" data-cursor="open">
+              <span class="social__index mono">05</span>
+              <span class="social__name">MyAnimeList</span>
+              <span class="social__handle mono">raintxhanx</span>
+              <span class="social__arrow">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div class="wrap footer__inner">
+            <span class="mono">© 2026 Raihan Fathoni</span>
+            <span class="mono footer__mid">Built with Three.js, curiosity &amp; too much coffee</span>
+            <div class="footer__right">
+              <span class="mono" id="footer-time">--:-- WIB</span>
+              <a href="#intro" class="footer__top mono" data-magnetic>Back to top ↑</a>
+            </div>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span class="mono">Copied to clipboard</span>
+    </div>
+  </body>
+</html>

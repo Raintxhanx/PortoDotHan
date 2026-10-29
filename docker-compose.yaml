@@ -1,0 +1,9 @@
+services:
+  portodothan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portodothan
+    ports:
+      - "8091:80"
+    restart: unless-stopped

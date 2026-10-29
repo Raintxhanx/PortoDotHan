@@ -1,0 +1,225 @@
+.work__list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(60px, 9vw, 124px);
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: center;
+}
+
+.project:nth-child(even) .project__media {
+  order: 2;
+}
+
+.project:nth-child(even) .project__info {
+  order: 1;
+}
+
+.project__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0c0e15;
+  transform-style: preserve-3d;
+  transition:
+    border-color 0.5s ease,
+    box-shadow 0.6s ease;
+}
+
+.project--feature .project__media {
+  aspect-ratio: 16 / 9.6;
+}
+
+.project__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(7, 8, 12, 0.62), transparent 46%),
+    rgba(7, 8, 12, 0.08);
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.project__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.82) brightness(0.84);
+  transform: scale(1.01);
+  transition:
+    transform 1.3s var(--ease),
+    filter 0.8s var(--ease);
+}
+
+.project__media:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.85);
+}
+
+.project__media:hover img {
+  transform: scale(1.055);
+  filter: saturate(1) brightness(1);
+}
+
+.project__media:hover::after {
+  opacity: 0.6;
+}
+
+.project__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 7px 11px;
+  border: 1px solid rgba(241, 237, 227, 0.16);
+  background: rgba(7, 8, 12, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  color: var(--bone-dim);
+}
+
+.project__view {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  z-index: 2;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s var(--ease);
+}
+
+.project__media:hover .project__view {
+  opacity: 1;
+  transform: none;
+}
+
+.project__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.project__num {
+  color: var(--gold);
+  font-size: 8px;
+}
+
+.project__year {
+  color: var(--muted);
+  font-size: 7.5px;
+}
+
+.project__title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+
+.project__desc {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--bone-dim);
+  max-width: 46ch;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 22px;
+}
+
+.tags li {
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.project__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  transition: color 0.35s ease;
+}
+
+.project__link .arrow {
+  font-size: 15px;
+  transition: transform 0.45s var(--ease);
+}
+
+.project__link:hover {
+  color: var(--gold);
+}
+
+.project__link:hover .arrow {
+  transform: translate(3px, -3px);
+}
+
+.work__more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(70px, 10vw, 130px);
+  padding: 26px 4px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--bone-dim);
+  transition:
+    color 0.4s ease,
+    padding 0.5s var(--ease);
+}
+
+.work__more .mono {
+  font-size: 9px;
+}
+
+.work__more-arrow {
+  font-size: 24px;
+  line-height: 1;
+  transition: transform 0.5s var(--ease);
+}
+
+.work__more:hover {
+  color: var(--gold);
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.work__more:hover .work__more-arrow {
+  transform: translate(4px, -4px);
+}

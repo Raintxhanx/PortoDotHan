@@ -1,0 +1,229 @@
+.contact {
+  padding-bottom: 0;
+}
+
+.contact__title {
+  margin-bottom: clamp(56px, 9vw, 120px);
+  font-size: clamp(2.7rem, 8vw, 8.4rem);
+  font-weight: 300;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+
+.contact__title em {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--gold);
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(36px, 6vw, 100px);
+  padding-top: 34px;
+  border-top: 1px solid var(--line);
+}
+
+.contact__mail > .mono {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.contact__email {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: clamp(1.5rem, 3.6vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  word-break: break-word;
+  transition: color 0.4s ease;
+}
+
+.contact__email::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--line-strong);
+  transition: background 0.4s ease;
+}
+
+.contact__email:hover {
+  color: var(--gold);
+}
+
+.contact__email:hover::after {
+  background: var(--gold);
+}
+
+.contact__email-arrow {
+  font-size: 0.5em;
+  line-height: 1.6;
+  color: var(--gold);
+}
+
+.copy-btn {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.copy-btn:hover {
+  color: var(--bone);
+  border-color: var(--bone);
+}
+
+.contact__aside p {
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--bone-dim);
+  max-width: 38ch;
+}
+
+.contact__status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.contact__status .mono {
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.socials {
+  margin-top: clamp(60px, 9vw, 120px);
+  border-top: 1px solid var(--line);
+}
+
+.social {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1.1fr 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  transition: padding 0.5s var(--ease);
+}
+
+.social::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(241, 237, 227, 0.03);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+
+.social:hover::before {
+  transform: scaleX(1);
+}
+
+.social:hover {
+  padding-left: 16px;
+}
+
+.social__index {
+  position: relative;
+  color: var(--gold);
+  font-size: 7.5px;
+}
+
+.social__name {
+  position: relative;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  transition: color 0.35s ease;
+}
+
+.social:hover .social__name {
+  color: var(--gold);
+}
+
+.social__handle {
+  position: relative;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.social__arrow {
+  position: relative;
+  font-size: 18px;
+  color: var(--muted);
+  transition:
+    transform 0.5s var(--ease),
+    color 0.35s ease;
+}
+
+.social:hover .social__arrow {
+  color: var(--gold);
+  transform: translate(3px, -3px);
+}
+
+.footer {
+  position: relative;
+  margin-top: clamp(70px, 10vw, 130px);
+  border-top: 1px solid var(--line);
+  padding: 26px 0 30px;
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  color: var(--muted);
+}
+
+.footer__inner .mono {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+}
+
+.footer__mid {
+  opacity: 0.75;
+}
+
+.footer__right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.footer__top {
+  color: var(--bone-dim);
+  transition: color 0.35s ease;
+}
+
+.footer__top:hover {
+  color: var(--gold);
+}
