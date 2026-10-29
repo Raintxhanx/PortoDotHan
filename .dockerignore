@@ -1,4 +1,24 @@
+# Dependencies and build output (rebuilt inside the image)
 node_modules
 dist
+dist-ssr
+
+# Version control and CI
 .git
+.gitignore
+.github
+
+# Local env / secrets
 .env
+.env.*
+!.env_sample
+
+# Tooling and docs (not needed to build the site)
+.vscode
+.idea
+*.log
+coverage
+README.md
+LICENSE
+Dockerfile
+docker-compose*.y*ml

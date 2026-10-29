@@ -27,7 +27,7 @@ The site is a small, hand-built universe: a living shader orb, a drifting starfi
 | Styles | [Sass](https://sass-lang.com/) |
 | Type | Instrument Serif, Space Grotesk, JetBrains Mono |
 | Audio | WebAudio API (no files) |
-| Deploy | `gh-pages` |
+| Deploy | `gh-pages` / Docker + NGINX |
 
 ## 🚀 Run it
 
@@ -50,6 +50,30 @@ npm run deploy
 ```
 
 The build uses relative asset paths (`base: './'`), so it also works from a subdirectory or any static host.
+
+### 🐳 Docker (production)
+
+The image is a multi-stage build: Vite compiles the site, then NGINX serves the static output as a non-root user on port `8080`. Use `npm run dev` for hot reload; the container always serves the production build.
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+The site is then available at <http://localhost:8091>. To publish a different port, set `APP_PORT` in a `.env` file (or your shell) before starting:
+
+```dotenv
+APP_PORT=3000
+```
+
+Stop it with `docker compose down`. Without Compose:
+
+```bash
+docker build -t portodothan .
+docker run --rm -p 8091:8080 portodothan
+```
+
+The container runs with a read-only filesystem, no Linux capabilities and a health check on `/healthz`. `nginx/default.conf` handles SPA routing, gzip, long-lived caching for hashed assets and basic security headers. If TLS is terminated by a reverse proxy in front of it, add HSTS there.
 
 ## 🗂 Structure
 
