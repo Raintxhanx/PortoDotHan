@@ -6,6 +6,7 @@ const LABELS = {
   read: 'Read',
   email: 'Email ↗',
   wish: 'Wish',
+  fly: 'Fly ✦',
 }
 
 export default class Cursor {
@@ -16,12 +17,21 @@ export default class Cursor {
     this.fine = window.matchMedia('(pointer: fine)').matches
     if (!this.fine) {
       this.el.remove()
+      this.el = null
       return
     }
 
     this.dot = this.el.querySelector('.cursor__dot')
     this.ring = this.el.querySelector('.cursor__ring')
     this.label = this.el.querySelector('.cursor__label')
+
+    // Custom cursor is a progressive enhancement: if the markup is missing,
+    // leave the native cursor alone instead of throwing every frame.
+    if (!this.dot || !this.ring || !this.label) {
+      this.el.remove()
+      this.el = null
+      return
+    }
 
     this.mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
     this.dotPos = { ...this.mouse }
@@ -52,10 +62,12 @@ export default class Cursor {
         const key = target.dataset.cursor
         this.label.textContent = LABELS[key] || ''
         this.el.classList.add('is-active')
-        if (key === 'view' || key === 'wish') this.el.classList.add('is-gold')
+        this.el.classList.remove('is-hover')
+        if (key === 'view' || key === 'wish' || key === 'fly') this.el.classList.add('is-gold')
         this.hovering = true
       } else if (interactive) {
         this.el.classList.add('is-hover')
+        this.el.classList.remove('is-active', 'is-gold')
         this.hovering = true
       }
     })
@@ -92,6 +104,22 @@ export default class Cursor {
     this.el.classList.remove('is-active', 'is-hover', 'is-gold', 'is-down')
     this.label.textContent = ''
     this.hovering = false
+  }
+
+  /**
+   * Called when a raycast hovers a galaxy node. The node has no DOM element
+   * under the cursor, so the custom cursor is driven from the scene instead.
+   */
+  setSceneHover(active) {
+    if (!this.el) return
+
+    if (active) {
+      this.label.textContent = LABELS.fly
+      this.el.classList.add('is-active', 'is-gold')
+      this.el.classList.remove('is-hover')
+    } else if (!this.hovering) {
+      this.clear()
+    }
   }
 
   loop = () => {

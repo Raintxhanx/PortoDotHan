@@ -306,4 +306,29 @@ body.is-ready .hero__spark {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.55s var(--ease),
+    transform 0.65s var(--ease),
+    visibility 0s linear 0s;
+}
+
+/* Called from index.js the moment the intro starts leaving the viewport. */
+.marquee--hero.is-out,
+.menu-open .marquee--hero,
+body.is-loading .marquee--hero {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.6s var(--ease),
+    visibility 0s linear 0.6s;
+}
+
+.marquee--hero.is-out .marquee__track {
+  animation-play-state: paused;
 }

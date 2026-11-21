@@ -268,7 +268,11 @@ em {
 
 /* ── marquee ──────────────────────────────────────────────── */
 .marquee {
+  --marquee-gap: clamp(22px, 2.6vw, 40px);
+
   position: relative;
+  display: flex;
+  align-items: center;
   overflow: hidden;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -281,28 +285,63 @@ em {
 .marquee__track {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: var(--marquee-gap);
   width: max-content;
   animation: marquee 48s linear infinite;
   will-change: transform;
 }
 
-.marquee__track span {
+/* Two identical flex groups, each carrying its own trailing gap, so a -50%
+   translation lands on a pixel-perfect copy of the starting frame. */
+.marquee__track--duo {
+  gap: 0;
+}
+
+.marquee__group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+}
+
+.marquee__track span,
+.marquee__group span {
+  display: block;
   font-family: var(--mono);
   font-size: 10px;
+  line-height: 1;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--bone-dim);
   white-space: nowrap;
 }
 
-.marquee__track i {
+.marquee__track i,
+.marquee__group i {
+  display: block;
   font-style: normal;
   font-size: 8px;
+  line-height: 1;
   color: var(--gold);
 }
 
+@media (hover: hover) {
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+}
+
 @keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
   to {
     transform: translate3d(-50%, 0, 0);
   }
