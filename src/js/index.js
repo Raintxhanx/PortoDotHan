@@ -170,7 +170,7 @@ const sectionObserver = new IntersectionObserver(
   { rootMargin: '-42% 0px -42% 0px', threshold: 0 },
 )
 
-$$('[data-scene]').forEach((section) => sectionObserver.observe(section))
+$$('section[data-scene]').forEach((section) => sectionObserver.observe(section))
 
 /* ─────────────────────────────────────────────────────────────
    Scroll chrome + ambient colour blending
@@ -179,8 +179,11 @@ $$('[data-scene]').forEach((section) => sectionObserver.observe(section))
 const nav = $('#nav')
 const progressBar = $('#progress-bar')
 const rootStyle = document.documentElement.style
+const heroSection = $('#intro')
+const heroMarquee = $('.marquee--hero')
 
 let lastScroll = -1
+let marqueeOut = null
 let chromeRaf = null
 
 const chromeLoop = () => {
@@ -195,6 +198,18 @@ const chromeLoop = () => {
   if (nav && Math.abs(y - lastScroll) > 2) {
     nav.classList.toggle('is-scrolled', y > 40)
     lastScroll = y
+  }
+
+  // The marquee belongs to the intro only: fade it out as soon as the hero is
+  // mostly gone, then bring it back when the visitor scrolls home again.
+  if (heroSection && heroMarquee) {
+    const rect = heroSection.getBoundingClientRect()
+    const out = rect.bottom < window.innerHeight * 0.55
+
+    if (out !== marqueeOut) {
+      marqueeOut = out
+      heroMarquee.classList.toggle('is-out', out)
+    }
   }
 
   // blend the ambient glow colours toward the active section
@@ -250,8 +265,27 @@ setInterval(tickClock, 1000)
    Cursor + ambient audio
    ───────────────────────────────────────────────────────────── */
 
-new Cursor()
+const cursor = new Cursor()
 new Ambient($('#sound'))
+
+// Keep the custom cursor in sync with 3D node hover from the galaxy scene.
+window.addEventListener('galaxy:hover', (event) => {
+  cursor.setSceneHover?.(event.detail.index >= 0)
+})
+
+// A fly-to / HUD click should update the palette and nav immediately, without
+// waiting for the IntersectionObserver to catch up.
+window.addEventListener('galaxy:section', (event) => {
+  const name = event.detail?.id
+  if (!name) return
+
+  document.body.dataset.scene = name
+  paletteTarget = PALETTES[name] || PALETTES.hero
+
+  $$('[data-nav]').forEach((link) => {
+    link.classList.toggle('is-active', link.dataset.nav === name)
+  })
+})
 
 /* ─────────────────────────────────────────────────────────────
    Menu
@@ -409,8 +443,34 @@ wishResult?.addEventListener('click', closeWish)
    ───────────────────────────────────────────────────────────── */
 
 $$('a[href^="#"]').forEach((link) => {
-  link.addEventListener('click', () => {
+  link.addEventListener('click', (event) => {
     if (document.body.classList.contains('menu-open')) setMenu(false)
+
+    const href = link.getAttribute('href')
+    if (!href || href === '#') return
+
+    const id = href.replace(/^#/, '')
+    const target = document.querySelector(href)
+
+    // The static page sections may be gone, but every nav item still maps to a
+    // galaxy chapter. Prefer the real section when it exists, then fall back to
+    // the chapter id ("about", "work", …) so the header keeps flying to the
+    // correct star.
+    const scene =
+      target?.dataset.scene ??
+      (experience?.state?.getSection?.(id) ? id : null)
+
+    if (!scene || !experience?.focusSection) return
+
+    // Native anchor behaviour has no idea about the camera spline, so hand the
+    // scroll over to the camera rig (it scrolls the document and flies at once).
+    event.preventDefault()
+
+    $$('[data-nav]').forEach((item) => {
+      item.classList.toggle('is-active', item.dataset.nav === scene)
+    })
+
+    experience.focusSection(scene)
   })
 })
 

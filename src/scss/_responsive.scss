@@ -274,14 +274,21 @@
   }
 
   .marquee {
+    --marquee-gap: 22px;
+
     padding: 12px 0;
   }
 
   .marquee__track {
-    gap: 22px;
+    gap: var(--marquee-gap);
   }
 
-  .marquee__track span {
+  .marquee__track--duo {
+    gap: 0;
+  }
+
+  .marquee__track span,
+  .marquee__group span {
     font-size: 8px;
   }
 

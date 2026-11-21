@@ -61,11 +61,18 @@
     <script type="module" defer src="./js/index.js"></script>
     <noscript>
       <style>
-        .loader, .cursor, .grain { display: none !important; }
+        .loader, .cursor, .grain, .orbit { display: none !important; }
         body { overflow: auto !important; }
         [data-reveal] { opacity: 1 !important; transform: none !important; }
         .hero__word, .hero__line--serif em { transform: none !important; clip-path: none !important; }
       </style>
+      <div class="noscript-summary">
+        <h1>Raihan Fathoni — AI, Backend &amp; Data</h1>
+        <p>An ordinary human, happy with small things. I build quiet, useful software with AI, backend engineering and data. Student at Gunadarma University, Indonesia. Open to collaborate.</p>
+        <p>Skills: Python, Java, Go, PyTorch, TensorFlow, MySQL, Excel, Git, JavaScript.</p>
+        <p>Selected work: GravidaCompan.io, GravidaChatbot, Interactive Campus Map, Personal Discord Bot, Linked List Visualizer, Excel Sheet Extraction.</p>
+        <p>Contact: raintxhanx@gmail.com · GitHub: github.com/Raintxhanx</p>
+      </div>
     </noscript>
   </head>
   <body class="is-loading">
@@ -78,6 +85,44 @@
     </div>
 
     <canvas class="scene" aria-hidden="true"></canvas>
+    <div class="scene-veil" aria-hidden="true"></div>
+
+    <div class="orbit" id="orbit">
+      <div class="orbit__markers" id="orbit-markers" role="group" aria-label="Galaxy chapters"></div>
+
+      <aside class="orbit-card" id="orbit-card" aria-label="Current chapter">
+        <div class="orbit-card__inner">
+          <span class="orbit-card__handle" aria-hidden="true"></span>
+          <div class="orbit-card__top">
+            <span class="orbit-card__index mono" id="orbit-index">00</span>
+            <span class="orbit-card__label mono" id="orbit-label">Origin</span>
+            <span class="orbit-card__count mono" id="orbit-count">00 / 05</span>
+            <button
+              class="orbit-card__toggle"
+              id="orbit-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="orbit-body"
+              aria-label="Expand chapter details"
+            >
+              <span></span><span></span>
+            </button>
+          </div>
+
+          <h2 class="orbit-card__title" id="orbit-title">Raihan <em>Fathoni</em></h2>
+
+          <div class="orbit-card__body" id="orbit-body">
+            <p class="orbit-card__blurb" id="orbit-blurb"></p>
+            <ul class="orbit-card__meta" id="orbit-meta"></ul>
+            <div class="orbit-card__details" id="orbit-details"></div>
+            <a class="orbit-card__cta" id="orbit-cta" href="#intro">
+              <span id="orbit-cta-label">Next chapter</span>
+              <span class="orbit-card__arrow" aria-hidden="true">↘</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
 
     <div class="grain" aria-hidden="true"></div>
     <div class="cursor" aria-hidden="true">
@@ -98,7 +143,7 @@
         </div>
         <div class="loader__bar"><span id="loader-bar"></span></div>
         <div class="loader__bottom">
-          <span class="mono">Loading small things</span>
+          <span class="mono">Charting the galaxy</span>
           <span class="mono"><b id="load-count">00</b>%</span>
         </div>
       </div>
@@ -220,19 +265,43 @@
         </div>
 
         <div class="marquee marquee--hero" aria-hidden="true">
-          <div class="marquee__track">
-            <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
-            <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
-            <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
-            <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
-            <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
-            <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+          <div class="marquee__track marquee__track--duo">
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+              <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+              <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+              <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+              <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+              <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Java</span><i>✦</i><span>Go</span><i>✦</i>
+              <span>PyTorch</span><i>✦</i><span>TensorFlow</span><i>✦</i><span>MySQL</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ───────────────────────── ABOUT ───────────────────────── -->
-      <section class="section about" id="about" data-scene="about" aria-labelledby="about-title">
+      <!-- <section class="section about" id="about" data-scene="about" aria-labelledby="about-title">
         <div class="wrap">
           <header class="sec-head" data-reveal>
             <span class="sec-head__index mono">01 / About</span>
@@ -313,10 +382,10 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- ───────────────────────── TOOLKIT ───────────────────────── -->
-      <section class="section toolkit" id="toolkit" data-scene="toolkit" aria-labelledby="toolkit-title">
+      <!-- <section class="section toolkit" id="toolkit" data-scene="toolkit" aria-labelledby="toolkit-title">
         <div class="wrap">
           <header class="sec-head" data-reveal>
             <span class="sec-head__index mono">02 / Toolkit</span>
@@ -401,10 +470,10 @@
             </ul>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- ───────────────────────── WORK ───────────────────────── -->
-      <section class="section work" id="work" data-scene="work" aria-labelledby="work-title">
+      <!-- <section class="section work" id="work" data-scene="work" aria-labelledby="work-title">
         <div class="wrap">
           <header class="sec-head" data-reveal>
             <span class="sec-head__index mono">03 / Work</span>
@@ -569,10 +638,10 @@
             <span class="work__more-arrow">↗</span>
           </a>
         </div>
-      </section>
+      </section> -->
 
       <!-- ───────────────────────── NOW ───────────────────────── -->
-      <section class="section now" id="now" data-scene="now" aria-labelledby="now-title">
+      <!-- <section class="section now" id="now" data-scene="now" aria-labelledby="now-title">
         <div class="wrap">
           <header class="sec-head" data-reveal>
             <span class="sec-head__index mono">04 / Now</span>
@@ -636,10 +705,10 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- ───────────────────────── CONTACT ───────────────────────── -->
-      <section class="section contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
+      <!-- <section class="section contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
         <div class="wrap">
           <header class="sec-head" data-reveal>
             <span class="sec-head__index mono">05 / Contact</span>
@@ -720,8 +789,11 @@
             </div>
           </div>
         </footer>
-      </section>
+      </section> -->
+      <div class="scroll-spacer" aria-hidden="true"></div>
     </main>
+
+    <div id="card-layer"></div>
 
     <div class="toast" id="toast" role="status" aria-live="polite">
       <span class="mono">Copied to clipboard</span>
