@@ -1,0 +1,16 @@
+---
+import { SITE } from '@/data/site'
+
+const year = new Date().getFullYear()
+---
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span class="mono">© {year} {SITE.name}</span>
+    <span class="mono footer__mid">Dibangun dengan Three.js, rasa ingin tahu &amp; kopi</span>
+    <div class="footer__right">
+      <span class="mono" id="footer-time">--:-- WIB</span>
+      <a href="#main" class="footer__top mono">Kembali ke atas ↑</a>
+    </div>
+  </div>
+</footer>

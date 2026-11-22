@@ -1,6 +1,8 @@
 /**
- * A small generative ambient pad — no audio files, just WebAudio.
- * Two detuned drones, a slow filter sweep and a very quiet fifth.
+ * Ambient audio toggle.
+ *
+ * The MP3 is intentionally created on the first click (not at construction),
+ * so a page load never downloads the 6.5 MB track.
  */
 
 export default class Ambient {
@@ -11,16 +13,24 @@ export default class Ambient {
 
     if (!button) return
 
-    this.audio = new Audio('/audio/Lullabye.mp3')
-    this.audio.loop = true
-    this.audio.volume = 0.35
-    this.audio.preload = 'auto'
-
     button.addEventListener('click', () => this.toggle())
   }
 
+  /** Create the audio element on first user gesture, not on page load. */
+  ensureAudio() {
+    if (this.audio) return this.audio
+
+    this.audio = new Audio('/audio/Lullabye.mp3')
+    this.audio.loop = true
+    this.audio.volume = 0.35
+    this.audio.preload = 'none'
+
+    return this.audio
+  }
+
   async toggle() {
-    if (!this.audio) return
+    const audio = this.ensureAudio()
+    if (!audio) return
 
     if (this.playing) {
       this.audio.pause()

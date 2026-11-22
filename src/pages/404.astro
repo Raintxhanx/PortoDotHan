@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { SITE } from '@/data/site'
+
+const seo = {
+  title: 'Halaman tidak ditemukan — Raihan Ahmad Fathoni',
+  description: 'Halaman yang Anda cari tidak tersedia. Kembali ke beranda atau lihat proyek Raihan Ahmad Fathoni.',
+  path: '/404.html',
+  noindex: true,
+}
+---
+
+<BaseLayout seo={seo}>
+  <section class="page wrap not-found">
+    <p class="page__eyebrow mono">404 / Tidak ditemukan</p>
+    <h1 class="page__title">Halaman ini <em>tidak ada.</em></h1>
+    <p class="page__lede">
+      Mungkin tautannya berubah, atau halaman ini belum pernah dibuat. Anda bisa
+      kembali ke beranda atau langsung melihat proyek.
+    </p>
+    <div class="case-cta__actions">
+      <a class="btn" href="/"><span>Kembali ke beranda</span><span class="btn__arrow">↘</span></a>
+      <a class="link-underline" href="/proyek/">Lihat proyek</a>
+      <a class="link-underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </div>
+  </section>
+</BaseLayout>

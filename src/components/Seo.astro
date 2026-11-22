@@ -1,0 +1,86 @@
+---
+import { SITE, absolute } from '@/data/site'
+
+type JsonLdObject = Record<string, unknown>
+
+interface Props {
+  title: string
+  description: string
+  path: string
+  image?: string
+  type?: 'website' | 'profile' | 'article'
+  noindex?: boolean
+  published?: string | Date
+  modified?: string | Date
+  jsonLd?: JsonLdObject[]
+}
+
+const {
+  title,
+  description,
+  path,
+  image = SITE.ogImage,
+  type = 'website',
+  noindex = false,
+  published,
+  modified,
+  jsonLd = [],
+} = Astro.props
+
+const canonical = absolute(path)
+const imageUrl = absolute(image)
+const verification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION
+const robots = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+
+const iso = (value?: string | Date) => {
+  if (!value) return undefined
+  const date = value instanceof Date ? value : new Date(value)
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString()
+}
+
+const publishedIso = iso(published)
+const modifiedIso = iso(modified)
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={SITE.name} />
+<meta name="robots" content={robots} />
+<meta name="theme-color" content="#07080c" />
+{verification && <meta name="google-site-verification" content={verification} />}
+
+<link rel="canonical" href={canonical} />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={`${SITE.name} — Portofolio`} />
+<meta property="og:locale" content="id_ID" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={SITE.twitterHandle} />
+<meta name="twitter:creator" content={SITE.twitterHandle} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={title} />
+
+{publishedIso && <meta property="article:published_time" content={publishedIso} />}
+{modifiedIso && <meta property="article:modified_time" content={modifiedIso} />}
+{type === 'article' && <meta property="article:author" content={SITE.name} />}
+
+{jsonLd.length > 0 && (
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd })}
+  />
+)}

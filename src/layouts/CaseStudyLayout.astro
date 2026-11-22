@@ -1,0 +1,142 @@
+---
+import PageLayout from './PageLayout.astro'
+import { SITE } from '@/data/site'
+import {
+  articleSchema,
+  breadcrumbSchema,
+  graph,
+  organizationSchema,
+  personSchema,
+  softwareApplicationSchema,
+  webPageSchema,
+  websiteSchema,
+} from '@/lib/schema'
+
+type Frontmatter = {
+  title: string
+  description: string
+  slug: string
+  shortTitle?: string
+  date: string | Date
+  updated?: string | Date
+  role: string
+  period: string
+  stack: string[]
+  metrics: { value: string; label: string }[]
+  image: string
+  imageAlt?: string
+  schemaType?: 'SoftwareApplication' | 'Article'
+  repo?: string
+}
+
+const f = Astro.props.frontmatter as Frontmatter
+const path = `/proyek/${f.slug}/`
+const formatDate = (value: string | Date) =>
+  new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(
+    new Date(value),
+  )
+const breadcrumbs = [
+  { name: 'Beranda', href: '/' },
+  { name: 'Proyek', href: '/proyek/' },
+  { name: f.shortTitle ?? f.title },
+]
+
+const schema = graph(
+  personSchema(),
+  organizationSchema(),
+  websiteSchema(),
+  webPageSchema({ path, name: f.title, description: f.description }),
+  articleSchema({
+    path,
+    title: f.title,
+    description: f.description,
+    image: f.image,
+    published: f.date,
+    modified: f.updated ?? f.date,
+  }),
+  f.schemaType === 'SoftwareApplication'
+    ? softwareApplicationSchema({
+        path,
+        name: f.title,
+        description: f.description,
+        image: f.image,
+      })
+    : null,
+  breadcrumbSchema(path, breadcrumbs),
+)
+
+const seo = {
+  title: `${f.shortTitle ?? f.title} — Studi Kasus | ${SITE.name}`,
+  description: f.description,
+  path,
+  image: f.image,
+  type: 'article' as const,
+  published: f.date,
+  modified: f.updated ?? f.date,
+  jsonLd: schema,
+}
+---
+
+<PageLayout
+  seo={seo}
+  active="proyek"
+  eyebrow="Studi Kasus"
+  heading={f.title}
+  lede={f.description}
+  breadcrumbs={breadcrumbs}
+  variant="case"
+>
+  <Fragment slot="meta">
+    <dl class="case-meta">
+      <div>
+        <dt class="mono">Peran</dt>
+        <dd>{f.role}</dd>
+      </div>
+      <div>
+        <dt class="mono">Periode</dt>
+        <dd>{f.period}</dd>
+      </div>
+      <div>
+        <dt class="mono">Stack</dt>
+        <dd>{f.stack.join(' · ')}</dd>
+      </div>
+    </dl>
+    <ul class="case-metrics" aria-label="Metrik utama">
+      {f.metrics.map((metric) => (
+        <li>
+          <strong>{metric.value}</strong>
+          <span class="mono">{metric.label}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="case-byline mono">
+      Oleh {SITE.name} · Diterbitkan {formatDate(f.date)} · Diperbarui {formatDate(f.updated ?? f.date)}
+    </p>
+  </Fragment>
+
+  <Fragment slot="media">
+    <figure class="case-cover">
+      <img
+        src={f.image}
+        alt={f.imageAlt ?? `Sampul studi kasus ${f.title}`}
+        width="1200"
+        height="630"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+  </Fragment>
+
+  <slot />
+
+  <Fragment slot="after">
+    <aside class="case-cta">
+      <p class="mono">Butuh konteks lebih lengkap?</p>
+      <h2>Lihat proyek lain atau hubungi Raihan.</h2>
+      <div class="case-cta__actions">
+        <a class="btn" href="/proyek/"><span>Semua proyek</span><span class="btn__arrow">↘</span></a>
+        <a class="link-underline" href="/kontak/">Hubungi Raihan</a>
+      </div>
+    </aside>
+  </Fragment>
+</PageLayout>

@@ -1,0 +1,131 @@
+---
+import '@fontsource/instrument-serif/latin-400.css'
+import '@fontsource/instrument-serif/latin-400-italic.css'
+import '@fontsource/space-grotesk/latin-300.css'
+import '@fontsource/space-grotesk/latin-400.css'
+import '@fontsource/space-grotesk/latin-500.css'
+import '@fontsource/space-grotesk/latin-600.css'
+import '@fontsource/jetbrains-mono/latin-300.css'
+import '@fontsource/jetbrains-mono/latin-400.css'
+import '@fontsource/jetbrains-mono/latin-500.css'
+import '@/scss/style.scss'
+
+import Seo from '@/components/Seo.astro'
+import Header from '@/components/Header.astro'
+import Menu from '@/components/Menu.astro'
+import Footer from '@/components/Footer.astro'
+
+type JsonLdObject = Record<string, unknown>
+
+interface Props {
+  seo: {
+    title: string
+    description: string
+    path: string
+    image?: string
+    type?: 'website' | 'profile' | 'article'
+    noindex?: boolean
+    published?: string | Date
+    modified?: string | Date
+    jsonLd?: JsonLdObject[]
+  }
+  active?: string
+  sound?: boolean
+  galaxy?: boolean
+  bodyClass?: string
+}
+
+const { seo, active = '', sound = false, galaxy = false, bodyClass = '' } = Astro.props
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    <Seo {...seo} />
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  </head>
+
+  <body class:list={[bodyClass, { 'is-home': galaxy }]}>
+    <a class="skip" href="#main">Lewati ke konten</a>
+
+    <div class="ambient" aria-hidden="true">
+      <div class="ambient__glow ambient__glow--a"></div>
+      <div class="ambient__glow ambient__glow--b"></div>
+      <div class="ambient__grid"></div>
+    </div>
+
+    {galaxy && <canvas class="scene" aria-hidden="true"></canvas>}
+    {galaxy && <div class="scene-veil" aria-hidden="true"></div>}
+
+    {galaxy && (
+      <div class="orbit" id="orbit">
+        <div class="orbit__markers" id="orbit-markers" role="group" aria-label="Bab galaksi"></div>
+
+        <aside class="orbit-card" id="orbit-card" aria-label="Bab saat ini">
+          <div class="orbit-card__inner">
+            <span class="orbit-card__handle" aria-hidden="true"></span>
+            <div class="orbit-card__top">
+              <span class="orbit-card__index mono" id="orbit-index">00</span>
+              <span class="orbit-card__label mono" id="orbit-label">Asal</span>
+              <span class="orbit-card__count mono" id="orbit-count">00 / 05</span>
+              <button
+                class="orbit-card__toggle"
+                id="orbit-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="orbit-body"
+                aria-label="Buka detail bab"
+              >
+                <span></span><span></span>
+              </button>
+            </div>
+
+            <p class="orbit-card__title" id="orbit-title">Raihan Ahmad <em>Fathoni</em></p>
+
+            <div class="orbit-card__body" id="orbit-body">
+              <p class="orbit-card__blurb" id="orbit-blurb"></p>
+              <ul class="orbit-card__meta" id="orbit-meta"></ul>
+              <div class="orbit-card__details" id="orbit-details"></div>
+              <a class="orbit-card__cta" id="orbit-cta" href="#intro">
+                <span id="orbit-cta-label">Bab berikutnya</span>
+                <span class="orbit-card__arrow" aria-hidden="true">↘</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    )}
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"><span class="cursor__label"></span></div>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+    <Header active={active} sound={sound} />
+    <Menu />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+
+    {galaxy && <div id="card-layer"></div>}
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span class="mono">Disalin ke clipboard</span>
+    </div>
+
+    <script>
+      import '../scripts/site.js'
+    </script>
+  </body>
+</html>

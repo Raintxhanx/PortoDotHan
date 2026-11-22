@@ -1,0 +1,118 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import { SITE } from '@/data/site'
+import {
+  breadcrumbSchema,
+  contactPageSchema,
+  graph,
+  personSchema,
+  websiteSchema,
+} from '@/lib/schema'
+
+const path = '/kontak/'
+const breadcrumbs = [
+  { name: 'Beranda', href: '/' },
+  { name: 'Kontak' },
+]
+const schema = graph(
+  websiteSchema(),
+  personSchema(),
+  contactPageSchema(path),
+  breadcrumbSchema(path, breadcrumbs),
+)
+
+const seo = {
+  title: 'Kontak Raihan Ahmad Fathoni — AI Engineer & Backend Developer',
+  description:
+    'Hubungi Raihan Ahmad Fathoni untuk kolaborasi, magang, atau diskusi seputar AI, backend, dan data. Email, LinkedIn, dan GitHub tersedia di sini.',
+  path,
+  image: '/og/contact.png',
+  type: 'website' as const,
+  jsonLd: schema,
+}
+---
+
+<PageLayout
+  seo={seo}
+  active="kontak"
+  eyebrow="Kontak"
+  heading="Kontak Raihan Ahmad Fathoni"
+  lede="Terbuka untuk kolaborasi open-source, magang, dan percakapan yang serius maupun sekadar penasaran."
+  breadcrumbs={breadcrumbs}
+>
+  <section aria-labelledby="email-title">
+    <h2 id="email-title">Email</h2>
+    <p>
+      Cara tercepat adalah email. Raihan biasanya membalas dalam 1–2 hari kerja.
+    </p>
+    <p class="contact-email">
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    </p>
+  </section>
+
+  <section aria-labelledby="profil-title">
+    <h2 id="profil-title">Profil dan media sosial</h2>
+    <ul class="contact-list">
+      {SITE.socials.map((social) => (
+        <li>
+          <span class="mono">{social.label}</span>
+          <a href={social.url} target="_blank" rel="noopener">{social.handle}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section aria-labelledby="lokasi-title">
+    <h2 id="lokasi-title">Lokasi dan ketersediaan</h2>
+    <dl class="facts">
+      <div>
+        <dt class="mono">Lokasi</dt>
+        <dd>Jakarta Timur, DKI Jakarta, Indonesia</dd>
+      </div>
+      <div>
+        <dt class="mono">Zona waktu</dt>
+        <dd>UTC+7 (WIB)</dd>
+      </div>
+      <div>
+        <dt class="mono">Status</dt>
+        <dd>Terbuka untuk kolaborasi dan magang</dd>
+      </div>
+      <div>
+        <dt class="mono">Fokus</dt>
+        <dd>AI Engineering · Backend · System Analysis</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section aria-labelledby="kerja-title">
+    <h2 id="kerja-title">Apa yang bisa dikerjakan bersama?</h2>
+    <p>
+      Raihan tertarik pada proyek yang punya masalah nyata dan pengguna nyata:
+      layanan backend, integrasi LLM, otomasi operasional, atau perbaikan sistem
+      yang sudah berjalan. Untuk konteks teknis, lihat
+      <a href="/proyek/">studi kasus proyek</a>.
+    </p>
+  </section>
+
+  <section aria-labelledby="proses-title">
+    <h2 id="proses-title">Apa yang terjadi setelah email?</h2>
+    <p>
+      Setiap pesan dibaca dan biasanya dibalas dalam 1–2 hari kerja. Untuk
+      kolaborasi teknis, sertakan konteks singkat: masalah yang ingin
+      diselesaikan, target waktu, dan peran yang dibutuhkan. Untuk pertanyaan
+      tentang proyek, tautan repositori atau studi kasus membantu memberi
+      jawaban yang lebih tepat.
+    </p>
+  </section>
+
+  <section aria-labelledby="rekruter-title">
+    <h2 id="rekruter-title">Untuk rekruter</h2>
+    <p>
+      Informasi utama: Informatika Universitas Gunadarma dengan IPK 3.99/4.00,
+      pengalaman sebagai Back End Developer pada platform LLM dan sistem
+      ticketing laboratorium, serta asisten laboratorium untuk 90+ praktikan.
+      Raihan terbuka untuk peran AI Engineering, Backend, dan System Analysis di
+      Jakarta maupun remote.
+    </p>
+  </section>
+</PageLayout>

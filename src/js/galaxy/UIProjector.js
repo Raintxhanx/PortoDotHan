@@ -72,7 +72,7 @@ export default class UIProjector {
       button.dataset.node = node.id
       button.dataset.cursor = 'fly'
       button.style.setProperty('--orbit-accent', node.accent)
-      button.setAttribute('aria-label', `Fly to ${node.label}`)
+      button.setAttribute('aria-label', `Terbang ke ${node.label}`)
 
       const dot = document.createElement('span')
       dot.className = 'orbit-marker__dot'
@@ -179,7 +179,7 @@ export default class UIProjector {
     this.els.toggle?.setAttribute('aria-expanded', String(this.expanded))
     this.els.toggle?.setAttribute(
       'aria-label',
-      this.expanded ? 'Collapse chapter details' : 'Expand chapter details',
+      this.expanded ? 'Tutup detail bab' : 'Buka detail bab',
     )
 
     if (this.els.body) {
@@ -226,7 +226,7 @@ export default class UIProjector {
 
     if (this.els.cta) this.els.cta.setAttribute('href', `#${this.nextId ?? section.href.replace(/^#/, '')}`)
     if (this.els.ctaLabel) {
-      this.els.ctaLabel.textContent = section.index === lastIndex ? 'Back to origin' : 'Next chapter'
+      this.els.ctaLabel.textContent = section.index === lastIndex ? 'Kembali ke awal' : 'Bab berikutnya'
     }
 
     if (this.els.meta) {
@@ -238,7 +238,7 @@ export default class UIProjector {
       this.els.meta.replaceChildren(...items)
     }
 
-    this.card.setAttribute('aria-label', `${section.label} chapter — ${section.title.replace(/<[^>]*>/g, '')}`)
+    this.card.setAttribute('aria-label', `Bab ${section.label} — ${section.title.replace(/<[^>]*>/g, '')}`)
 
     this.markerEls.forEach((element, index) => {
       element.classList.toggle('is-active', index === section.index)

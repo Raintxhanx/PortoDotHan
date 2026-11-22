@@ -1,0 +1,49 @@
+---
+import { NAV } from '@/data/site'
+
+interface Props {
+  active?: string
+  sound?: boolean
+}
+
+const { active = '', sound = false } = Astro.props
+---
+
+<header class="nav" id="nav">
+  <a class="nav__brand" href="/" aria-label="Raihan Ahmad Fathoni — beranda">
+    <span class="nav__mark">RF</span>
+    <span class="nav__pulse" aria-hidden="true"></span>
+  </a>
+
+  <nav class="nav__links" aria-label="Navigasi utama">
+    {NAV.map((item) => (
+      <a
+        href={item.href}
+        class:list={['nav__link', { 'is-active': active === item.key }]}
+        aria-current={active === item.key ? 'page' : undefined}
+      >
+        <span>{String(NAV.indexOf(item) + 1).padStart(2, '0')}</span>{item.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="nav__right">
+    <span class="nav__time mono" id="nav-time">--:-- WIB</span>
+    {sound && (
+      <button class="sound" id="sound" type="button" aria-pressed="false" aria-label="Nyalakan suara ambien">
+        <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound__text mono">Suara</span>
+      </button>
+    )}
+    <button
+      class="nav__menu-btn"
+      id="menu-btn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu"
+    >
+      <span class="mono">Menu</span>
+      <span class="nav__burger" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+</header>

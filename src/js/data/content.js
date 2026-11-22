@@ -1,87 +1,87 @@
 /**
  * Portfolio copy for the orbit card.
  *
- * The static page sections are intentionally collapsed into the galaxy HUD, so
- * this file is the single source of richer chapter information that gets
- * injected into `#orbit-details` whenever the active chapter changes.
+ * The six galaxy chapters are a navigational layer over the same facts used by
+ * the static pages. Keep names, metrics and links consistent with
+ * `src/data/site.ts` and `src/data/projects.ts`.
  */
 
 export const SKILLS = [
-  { name: 'Python', note: 'Data, AI and the occasional script that saves a whole afternoon.', level: 'Daily driver' },
-  { name: 'Java', note: 'Object-oriented foundations, coursework and clean structure.', level: 'Learning' },
-  { name: 'Go', note: 'A newer language in the bag — small binaries, clear concurrency.', level: 'Exploring' },
-  { name: 'PyTorch', note: 'Training wheels on. Models, tensors and a lot of reading.', level: 'Beginner' },
-  { name: 'TensorFlow', note: 'The other path into deep learning — still finding my footing.', level: 'Beginner' },
-  { name: 'MySQL', note: 'Schemas, queries and the quiet satisfaction of a tidy database.', level: 'Comfortable' },
-  { name: 'PyQt', note: 'Desktop apps that make abstract data structures feel tangible.', level: 'Practical' },
-  { name: 'Excel', note: 'Not a joke. Spreadsheets are my theory-crafting engine.', level: 'Suspiciously good' },
+  { name: 'Python', note: 'Data, AI, dan skrip kecil yang menghemat satu sore.', level: 'Daily driver' },
+  { name: 'Backend & API', note: 'REST API, autentikasi, dan layanan yang bisa dioperasikan.', level: 'Produksi' },
+  { name: 'LLM & RAG', note: 'Integrasi model, retrieval, evaluasi, dan batas biaya.', level: 'Praktik' },
+  { name: 'Database', note: 'Skema, query, dan data yang bisa diaudit.', level: 'Comfortable' },
+  { name: 'Docker & DevOps', note: 'Deployment, observability, dan otomasi rilis.', level: 'Comfortable' },
+  { name: 'System Analysis', note: 'Memetakan alur dan menerjemahkannya menjadi requirement.', level: 'Praktik' },
+  { name: 'JavaScript', note: 'Antarmuka kecil yang membuat data terasa hidup.', level: 'Praktik' },
+  { name: 'Excel', note: 'Bukan lelucon. Spreadsheet adalah mesin theorycrafting saya.', level: 'Suspiciously good' },
 ]
 
 export const PROJECTS = [
   {
-    title: 'GravidaCompan.io',
-    url: 'https://github.com/Raintxhanx/GravidaCompan.io',
-    desc: 'A web platform for integrated pregnancy monitoring and early risk detection, powered by AI.',
-    tags: ['AI', 'LLM', 'Web'],
+    title: 'Ticketing Management System',
+    url: '/proyek/ticketing-management-system/',
+    desc: 'Sistem ticketing Laboratorium Informatika Gunadarma: 687 praktikan dan 1.300+ tiket.',
+    tags: ['Backend', 'Database', 'Operasional'],
   },
   {
-    title: 'GravidaChatbot',
-    url: 'https://github.com/Raintxhanx/GravidaChatbot',
-    desc: 'An LLM-powered medical Q&A system for expectant mothers, grounded in Bahasa Indonesia and maternal health.',
-    tags: ['LLM', 'RAG', 'Public health'],
+    title: 'Platform Chat LLM',
+    url: '/proyek/platform-chat-llm/',
+    desc: 'Backend platform chat LLM dengan langganan, antrean, dan 200 concurrent users.',
+    tags: ['LLM', 'Backend', 'Langganan'],
+  },
+  {
+    title: 'Asisten Laboratorium',
+    url: '/proyek/asisten-laboratorium/',
+    desc: 'Membimbing 90+ praktikan pada materi AI, Pengolahan Citra, dan Algoritma.',
+    tags: ['AI', 'Pengolahan Citra', 'Algoritma'],
+  },
+  {
+    title: 'GravidaCompan.io',
+    url: 'https://github.com/Raintxhanx/GravidaCompan.io',
+    desc: 'Platform pemantauan kehamilan dan deteksi risiko awal berbasis AI.',
+    tags: ['AI', 'Kesehatan', 'Web'],
   },
   {
     title: 'Interactive Campus Map',
     url: 'https://github.com/Raintxhanx/Interactive-Campus-Map',
-    desc: 'A prototype web app that maps the distribution of campuses across Indonesia.',
-    tags: ['JavaScript', 'Mapping', 'CRUD'],
-  },
-  {
-    title: 'Personal Discord Bot',
-    url: 'https://github.com/Raintxhanx/Personal-Discord-Bot',
-    desc: 'A bot that automates small server chores and simulates Genshin Impact pull mechanics.',
-    tags: ['Python', 'Discord API', 'Gacha'],
-  },
-  {
-    title: 'Linked List Visualizer',
-    url: 'https://github.com/Raintxhanx/Linked-List-Visualizer',
-    desc: 'A PyQt desktop application that makes a linked list visible — insert, delete and manipulate nodes in real time.',
-    tags: ['Python', 'PyQt', 'Data structures'],
+    desc: 'Peta sebaran kampus di Indonesia dengan pencarian, filter, dan CRUD.',
+    tags: ['JavaScript', 'Peta', 'CRUD'],
   },
   {
     title: 'Excel Sheet Extraction',
     url: 'https://github.com/Raintxhanx/Excel-Sheet-Extraction-',
-    desc: 'A Windows executable that scans a column for a keyword and splits matching rows into dedicated sheets.',
-    tags: ['Python', 'PyQt', 'Automation'],
+    desc: 'Aplikasi Windows untuk memisahkan baris Excel berdasarkan kata kunci.',
+    tags: ['Python', 'PyQt', 'Otomasi'],
   },
 ]
 
 export const NOW = [
   {
-    label: 'Studying',
-    title: 'Gunadarma <em>University</em>',
-    body: 'Object-oriented programming and AI engineering, one semester at a time. Currently trying to make the theory stick.',
+    label: 'Sedang dibangun',
+    title: 'Platform <em>LLM</em>',
+    body: 'Backend chat LLM dengan langganan, penyimpanan percakapan, dan kontrol konkurensi.',
     meta: [
-      ['Focus', 'OOP · AI Engineering'],
-      ['Next', 'Better models, smaller tools'],
+      ['Stack', 'LLM · Backend · Queue'],
+      ['Fokus', 'Keandalan dan biaya'],
     ],
   },
   {
-    label: 'Building',
-    title: 'The Gravida <em>suite</em>',
-    body: 'A maternal health platform and its Bahasa Indonesia LLM companion. The project where code, care and consequence meet.',
+    label: 'Sedang dipelajari',
+    title: 'Sistem yang <em>tenang</em>',
+    body: 'Observability, desain API, dan cara membuat sistem besar terasa sederhana.',
     meta: [
-      ['Stack', 'Python · LLM · Web'],
-      ['Why', 'Small tools, real stakes'],
+      ['Fokus', 'System design'],
+      ['Berikutnya', 'Lebih sedikit, lebih jelas'],
     ],
   },
   {
-    label: 'Off-screen',
+    label: 'Di luar layar',
     title: 'Theory <em>crafting</em>',
-    body: 'Excel, game mechanics, music and mathematics. My favourite kind of rabbit hole is the one with a spreadsheet at the bottom.',
+    body: 'Excel, mekanika game, musik, dan matematika. Rabbit hole favorit selalu berakhir di spreadsheet.',
     meta: [
-      ['Tools', 'Excel · Probability'],
-      ['Mood', 'Curiosity, unclaimed'],
+      ['Tools', 'Excel · Probabilitas'],
+      ['Mood', 'Rasa ingin tahu'],
     ],
   },
 ]
@@ -106,17 +106,18 @@ const skillList = () =>
   ).join('')
 
 const projectList = () =>
-  PROJECTS.map(
-    (project) => `
+  PROJECTS.map((project) => {
+    const external = project.url.startsWith('http')
+    return `
       <li class="orbit-detail__item">
-        <a class="orbit-detail__link" href="${project.url}" target="_blank" rel="noopener">
+        <a class="orbit-detail__link" href="${project.url}"${external ? ' target="_blank" rel="noopener"' : ''}>
           <span class="orbit-detail__title">${project.title}</span>
-          <span class="orbit-detail__arrow" aria-hidden="true">↗</span>
+          <span class="orbit-detail__arrow" aria-hidden="true">${external ? '↗' : '↘'}</span>
         </a>
         <p class="orbit-detail__note">${project.desc}</p>
         <ul class="orbit-detail__tags">${project.tags.map((tag) => `<li>${tag}</li>`).join('')}</ul>
-      </li>`,
-  ).join('')
+      </li>`
+  }).join('')
 
 const nowList = () =>
   NOW.map(
@@ -156,24 +157,24 @@ export const CHAPTER_DETAILS = {
     html: `
       <div class="orbit-detail">
         <blockquote class="orbit-detail__quote">
-          <p lang="id">“Hanya manusia biasa yang bahagia dengan hal-hal kecil.”</p>
-          <cite class="mono">Just an ordinary human, happy with small things.</cite>
+          <p lang="id">“Manusia biasa, bahagia dengan hal-hal kecil.”</p>
+          <cite class="mono">Raihan Ahmad Fathoni</cite>
         </blockquote>
         <p>
-          Student at <strong>Gunadarma University</strong> and a beginner developer
-          diving into <strong>AI</strong>, <strong>backend engineering</strong> and
-          <strong>data analysis</strong>. My curiosity refuses to stay in one lane:
-          mathematics, science, music, open source — and the occasional spreadsheet
-          rabbit hole.
+          AI Engineer dan Backend Developer yang berbasis di Jakarta Timur.
+          Menempuh studi Informatika di <strong>Universitas Gunadarma</strong>
+          dengan IPK <strong>3.99/4.00</strong>, membangun sistem backend,
+          platform LLM, dan tools yang dipakai ratusan pengguna.
         </p>
         <p>
-          I like software that feels small, deliberate and quietly useful. The kind
-          you don’t notice until it saves someone an afternoon.
+          Suka bekerja di persimpangan AI, backend, dan operasi sistem: merancang
+          alur, menulis layanan, mengukur hasil, lalu menyederhanakan bagian yang
+          masih terlalu rumit.
         </p>
         <dl class="orbit-detail__stats">
-          <div><dt class="mono">Repos</dt><dd>11</dd></div>
-          <div><dt class="mono">Languages</dt><dd>03</dd></div>
-          <div><dt class="mono">Questions</dt><dd>∞</dd></div>
+          <div><dt class="mono">IPK</dt><dd>3.99</dd></div>
+          <div><dt class="mono">Praktikan</dt><dd>687</dd></div>
+          <div><dt class="mono">Tiket</dt><dd>1.300+</dd></div>
         </dl>
       </div>`,
   },
@@ -181,8 +182,8 @@ export const CHAPTER_DETAILS = {
     html: `
       <div class="orbit-detail">
         <p class="orbit-detail__lead">
-          A small, growing collection. Some are daily companions, some are currently
-          being wrestled with — honest levels only.
+          Keahlian utama, dengan level yang jujur. Fokus pada sistem yang bisa
+          dioperasikan, bukan hanya demo.
         </p>
         <div class="orbit-detail__skills">${skillList()}</div>
       </div>`,
@@ -190,17 +191,17 @@ export const CHAPTER_DETAILS = {
   work: {
     html: `
       <div class="orbit-detail">
-        <p class="orbit-detail__lead">Six selected projects — small things, built well.</p>
+        <p class="orbit-detail__lead">Tiga studi kasus utama dan beberapa proyek pendukung.</p>
         <ul class="orbit-detail__list">${projectList()}</ul>
-        <a class="orbit-detail__more mono" href="https://github.com/Raintxhanx?tab=repositories" target="_blank" rel="noopener">
-          More on GitHub <span aria-hidden="true">↗</span>
+        <a class="orbit-detail__more mono" href="/proyek/">
+          Semua proyek <span aria-hidden="true">↘</span>
         </a>
       </div>`,
   },
   now: {
     html: `
       <div class="orbit-detail">
-        <p class="orbit-detail__lead">Lately, quietly — what is taking up the hours.</p>
+        <p class="orbit-detail__lead">Yang sedang menyita waktu dan rasa ingin tahu.</p>
         <ul class="orbit-detail__list">${nowList()}</ul>
       </div>`,
   },
@@ -208,28 +209,19 @@ export const CHAPTER_DETAILS = {
     html: `
       <div class="orbit-detail">
         <p class="orbit-detail__lead">
-          Open to open-source collaboration, internships, and conversations about AI,
-          data, mathematics or music. I reply faster than my models train.
+          Terbuka untuk kolaborasi open-source, magang, dan diskusi seputar AI,
+          data, serta backend.
         </p>
         <a class="orbit-detail__mail" href="mailto:raintxhanx@gmail.com">
-          <span class="mono">Write to me</span>
+          <span class="mono">Kirim email</span>
           <strong>raintxhanx@gmail.com</strong>
           <span aria-hidden="true">↗</span>
         </a>
         <ul class="orbit-detail__list">${socialList()}</ul>
         <p class="orbit-detail__status mono">
           <span class="status-dot" aria-hidden="true"></span>
-          Available for collaboration
+          Terbuka untuk kolaborasi
         </p>
       </div>`,
   },
-}
-
-/* Kept for backwards compatibility with the earlier page-section builder. */
-export const SECTIONS = {
-  about: { title: 'The ordinary <em>human.</em>', html: CHAPTER_DETAILS.about.html },
-  toolkit: { title: 'Tools I <em>reach for.</em>', html: CHAPTER_DETAILS.toolkit.html },
-  work: { title: 'Small things, <em>built well.</em>', html: CHAPTER_DETAILS.work.html },
-  now: { title: 'Lately, <em>quietly.</em>', html: CHAPTER_DETAILS.now.html },
-  contact: { title: 'Let’s build something <em>small that matters.</em>', html: CHAPTER_DETAILS.contact.html },
 }

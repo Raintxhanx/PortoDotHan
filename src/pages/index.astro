@@ -1,0 +1,202 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import { SITE } from '@/data/site'
+import { FEATURED_PROJECTS } from '@/data/projects'
+import { graph, organizationSchema, personSchema, profilePageSchema, websiteSchema } from '@/lib/schema'
+
+const schema = graph(
+  organizationSchema(),
+  websiteSchema(),
+  personSchema(),
+  profilePageSchema('/'),
+)
+
+const seo = {
+  title: 'Raihan Ahmad Fathoni — AI Engineer, Backend & Data | Portofolio',
+  description: SITE.description,
+  path: '/',
+  image: SITE.ogImage,
+  type: 'website' as const,
+  jsonLd: schema,
+}
+
+const skills = [
+  ['AI Engineering', 'LLM, RAG, evaluasi model, dan integrasi AI ke produk.'],
+  ['Backend Development', 'REST API, autentikasi, database, dan layanan yang bisa dioperasikan.'],
+  ['DevOps', 'Docker, deployment, observability, dan otomasi alur rilis.'],
+  ['System Analysis', 'Menerjemahkan masalah operasional menjadi alur dan requirement yang jelas.'],
+]
+---
+
+<BaseLayout seo={seo} galaxy sound active="beranda">
+  <div id="galaxy-track">
+    <section class="hero" id="intro" data-scene="hero" aria-labelledby="hero-title">
+      <div class="hero__inner wrap">
+        <div class="hero__top">
+          <p class="eyebrow">
+            <span class="eyebrow__dot"></span>
+            AI Engineering · Backend · Data
+          </p>
+          <p class="hero__kicker mono">Portofolio / Vol. 01</p>
+        </div>
+
+        <h1 class="hero__title hero__title--full" id="hero-title">
+          <span class="sr-only">Raihan Ahmad Fathoni</span>
+          <span class="hero__line" aria-hidden="true"><span class="hero__word">Raihan</span></span>
+          <span class="hero__line" aria-hidden="true"><span class="hero__word">Ahmad</span></span>
+          <span class="hero__line hero__line--serif" aria-hidden="true">
+            <em>Fathoni</em>
+            <svg class="hero__spark" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M50 0 L57 43 L100 50 L57 57 L50 100 L43 57 L0 50 L43 43 Z" />
+            </svg>
+          </span>
+        </h1>
+
+        <h2 class="hero__role">
+          AI Engineer · Backend Developer · System Analyst
+        </h2>
+
+        <div class="hero__foot">
+          <div class="hero__intro">
+            <p class="hero__lede">
+              Saya membangun perangkat lunak yang tenang dan berguna — dari
+              sistem ticketing laboratorium hingga platform chat LLM. Fokus pada
+              <em>AI Engineering, Backend,</em> dan <em>System Analysis.</em>
+            </p>
+            <div class="hero__actions">
+              <a class="btn" href="/proyek/" data-magnetic data-cursor="explore">
+                <span>Lihat Proyek</span>
+                <span class="btn__arrow">↘</span>
+              </a>
+              <a class="link-underline" href={`mailto:${SITE.email}`} data-cursor="email">
+                {SITE.email}
+              </a>
+            </div>
+          </div>
+
+          <dl class="hero__meta">
+            <div>
+              <dt class="mono">Berbasis di</dt>
+              <dd>Jakarta Timur <span class="muted">· UTC+7</span></dd>
+            </div>
+            <div>
+              <dt class="mono">Waktu lokal</dt>
+              <dd id="hero-time">--:--:--</dd>
+            </div>
+            <div>
+              <dt class="mono">Status</dt>
+              <dd><span class="status-dot"></span>Terbuka untuk kolaborasi</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="mono">Scroll</span>
+        <i></i>
+      </div>
+
+      <div class="marquee marquee--hero" aria-hidden="true">
+        <div class="marquee__track marquee__track--duo">
+          {[0, 1, 2, 3, 4, 5].map(() => (
+            <div class="marquee__group">
+              <span>Python</span><i>✦</i><span>Backend</span><i>✦</i><span>LLM</span><i>✦</i>
+              <span>DevOps</span><i>✦</i><span>Database</span><i>✦</i><span>System Analysis</span><i>✦</i>
+              <span>Open source</span><i>✦</i><span>Mathematics</span><i>✦</i><span>Music</span><i>✦</i>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="scroll-spacer" aria-hidden="true"></div>
+  </div>
+
+  <section class="dossier" id="dossier" aria-labelledby="dossier-title">
+    <div class="wrap">
+      <header class="dossier__head">
+        <p class="dossier__eyebrow mono">Profil / 2026</p>
+        <h2 class="dossier__title" id="dossier-title">
+          Sekilas <em>Raihan Ahmad Fathoni.</em>
+        </h2>
+        <p class="dossier__lede">
+          AI Engineer dan Backend Developer yang fokus pada sistem yang bisa
+          diandalkan, bukan sekadar demo. Berbasis di Jakarta Timur dan menempuh
+          studi Informatika di Universitas Gunadarma.
+        </p>
+      </header>
+
+      <div class="dossier__grid">
+        <div class="dossier__bio">
+          <p>{SITE.bio}</p>
+          <p>
+            Saya suka bekerja di persimpangan AI, backend, dan operasi sistem:
+            merancang alur, menulis layanan, mengukur hasil, lalu menyederhanakan
+            bagian yang masih terlalu rumit. Proyek-proyek di bawah adalah
+            pekerjaan nyata dengan pengguna, batasan, dan konsekuensi.
+          </p>
+          <a class="link-underline" href="/tentang/">Baca profil lengkap</a>
+        </div>
+
+        <dl class="metrics" aria-label="Metrik utama">
+          <div>
+            <dt class="mono">IPK</dt>
+            <dd>3.99<span class="metrics__scale">/4.00</span></dd>
+          </div>
+          <div>
+            <dt class="mono">Praktikan</dt>
+            <dd>687</dd>
+          </div>
+          <div>
+            <dt class="mono">Tiket</dt>
+            <dd>1.300+</dd>
+          </div>
+          <div>
+            <dt class="mono">Concurrent users</dt>
+            <dd>200</dd>
+          </div>
+        </dl>
+      </div>
+
+      <section class="dossier__section" aria-labelledby="featured-title">
+        <div class="dossier__section-head">
+          <h2 id="featured-title">Proyek <em>Unggulan</em></h2>
+          <a class="mono" href="/proyek/">Semua proyek ↗</a>
+        </div>
+        <div class="project-grid">
+          {FEATURED_PROJECTS.map((project, index) => (
+            <ProjectCard project={project} featured index={index + 1} />
+          ))}
+        </div>
+      </section>
+
+      <section class="dossier__section" aria-labelledby="skills-title">
+        <div class="dossier__section-head">
+          <h2 id="skills-title">Yang saya <em>kerjakan.</em></h2>
+          <span class="mono">AI · Backend · Sistem</span>
+        </div>
+        <div class="skill-grid">
+          {skills.map(([title, body], index) => (
+            <article class="skill-card">
+              <span class="mono">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{title}</h3>
+              <p>{body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="dossier__contact" aria-labelledby="contact-cta-title">
+        <div>
+          <p class="mono">Kolaborasi / Magang / Diskusi</p>
+          <h2 id="contact-cta-title">Mari membangun sesuatu <em>yang berguna.</em></h2>
+        </div>
+        <div class="dossier__contact-actions">
+          <a class="btn" href="/kontak/"><span>Hubungi Raihan</span><span class="btn__arrow">↘</span></a>
+          <a class="link-underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>

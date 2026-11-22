@@ -1,0 +1,14 @@
+/about /tentang/ 301
+/about/* /tentang/:splat 301
+/work /proyek/ 301
+/work/* /proyek/:splat 301
+/contact /kontak/ 301
+/contact/* /kontak/:splat 301
+/projects /proyek/ 301
+/projects/* /proyek/:splat 301
+/tentang /tentang/ 301
+/proyek /proyek/ 301
+/kontak /kontak/ 301
+/proyek/ticketing-management-system /proyek/ticketing-management-system/ 301
+/proyek/platform-chat-llm /proyek/platform-chat-llm/ 301
+/proyek/asisten-laboratorium /proyek/asisten-laboratorium/ 301
