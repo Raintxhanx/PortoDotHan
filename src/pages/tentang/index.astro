@@ -1,0 +1,162 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import Faq from '@/components/Faq.astro'
+import { FAQ } from '@/data/faq'
+import { SITE } from '@/data/site'
+import {
+  breadcrumbSchema,
+  faqSchema,
+  graph,
+  personSchema,
+  profilePageSchema,
+  websiteSchema,
+} from '@/lib/schema'
+
+const path = '/tentang/'
+const breadcrumbs = [
+  { name: 'Beranda', href: '/' },
+  { name: 'Tentang' },
+]
+const schema = graph(
+  websiteSchema(),
+  personSchema(),
+  profilePageSchema(path),
+  faqSchema(FAQ),
+  breadcrumbSchema(path, breadcrumbs),
+)
+
+const seo = {
+  title: 'Tentang Raihan Ahmad Fathoni — Backend Developer & AI Engineer',
+  description:
+    'Profil Raihan Ahmad Fathoni, AI Engineer & Backend Developer di Jakarta Timur. Mahasiswa Informatika Universitas Gunadarma (IPK 3.99). Pengalaman, keahlian, dan FAQ.',
+  path,
+  image: '/og/about.png',
+  type: 'profile' as const,
+  jsonLd: schema,
+}
+
+const experience = [
+  {
+    period: '2026',
+    role: 'Back End Developer',
+    org: 'Platform Chat LLM dengan Sistem Langganan',
+    body: 'Merancang backend untuk autentikasi, langganan, penyimpanan percakapan, dan kontrol konkurensi 200 pengguna simultan.',
+  },
+  {
+    period: '2025',
+    role: 'Back End Developer',
+    org: 'Ticketing Management System — Laboratorium Informatika Gunadarma',
+    body: 'Membangun sistem ticketing terpusat untuk 687 praktikan dan 1.300+ tiket, menggantikan pencatatan manual.',
+  },
+  {
+    period: '2024–2025',
+    role: 'Asisten Laboratorium',
+    org: 'Laboratorium Informatika Universitas Gunadarma',
+    body: 'Membimbing 90+ praktikan pada materi AI, Pengolahan Citra, dan Algoritma, termasuk penyusunan materi dan evaluasi.',
+  },
+]
+---
+
+<PageLayout
+  seo={seo}
+  active="tentang"
+  eyebrow="Profil"
+  heading="Tentang Raihan Ahmad Fathoni"
+  lede="AI Engineer dan Backend Developer yang membangun sistem dengan pengguna nyata, batasan nyata, dan hasil yang bisa diukur."
+  breadcrumbs={breadcrumbs}
+>
+  <section aria-labelledby="siapa-title">
+    <div class="about-intro">
+      <div>
+        <h2 id="siapa-title">Siapa Raihan?</h2>
+        <p>{SITE.bio}</p>
+        <p>
+          Fokusnya ada di persimpangan AI, backend, dan operasi sistem. Ia menikmati
+          pekerjaan yang dimulai dari masalah operasional sederhana — pencatatan
+          manual, alur yang berulang, atau layanan yang belum tahan beban — lalu
+          diakhiri dengan sistem yang lebih jelas dan lebih mudah dirawat.
+        </p>
+        <p>
+          Selain membangun produk, Raihan aktif sebagai asisten laboratorium dan
+          terbuka untuk kolaborasi open-source, magang, serta diskusi seputar AI,
+          data, dan backend.
+        </p>
+      </div>
+      <figure class="about-portrait">
+        <img
+          src="/img/avatar.webp"
+          alt="Raihan Ahmad Fathoni memegang api kecil dalam sebuah pertunjukan sains"
+          width="460"
+          height="460"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="mono">Raihan Ahmad Fathoni / @raintxhanx</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="pendidikan-title">
+    <h2 id="pendidikan-title">Pendidikan</h2>
+    <dl class="facts">
+      <div>
+        <dt class="mono">Universitas</dt>
+        <dd>Universitas Gunadarma</dd>
+      </div>
+      <div>
+        <dt class="mono">Program studi</dt>
+        <dd>Informatika</dd>
+      </div>
+      <div>
+        <dt class="mono">IPK</dt>
+        <dd>3.99 / 4.00</dd>
+      </div>
+      <div>
+        <dt class="mono">Lokasi</dt>
+        <dd>Jakarta Timur, DKI Jakarta</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section aria-labelledby="pengalaman-title">
+    <h2 id="pengalaman-title">Pengalaman</h2>
+    <div class="timeline">
+      {experience.map((item) => (
+        <article class="timeline__item">
+          <span class="timeline__period mono">{item.period}</span>
+          <div>
+            <h3>{item.role}</h3>
+            <p class="timeline__org">{item.org}</p>
+            <p>{item.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="keahlian-title">
+    <h2 id="keahlian-title">Keahlian</h2>
+    <ul class="skill-list">
+      <li><strong>AI Engineering</strong> — LLM, RAG, evaluasi model, integrasi AI ke produk.</li>
+      <li><strong>Backend Development</strong> — REST API, autentikasi, database, layanan produksi.</li>
+      <li><strong>DevOps</strong> — Docker, deployment, observability, otomasi rilis.</li>
+      <li><strong>System Analysis</strong> — pemetaan alur, requirement, dan desain solusi.</li>
+      <li><strong>Bahasa &amp; tools</strong> — Python, SQL, Docker, Git, Linux.</li>
+    </ul>
+    <p>
+      Daftar proyek dan detail teknisnya ada di <a href="/proyek/">halaman proyek</a>.
+    </p>
+  </section>
+
+  <section aria-labelledby="cara-kerja-title">
+    <h2 id="cara-kerja-title">Cara saya bekerja</h2>
+    <p>
+      Mulai dari batasan, bukan dari framework. Saya memetakan alur yang ada,
+      menentukan metrik yang ingin diperbaiki, lalu membangun bagian terkecil
+      yang bisa dipakai dan diukur. Setelah itu baru memperluas cakupan,
+      menambah observability, dan merapikan operasional.
+    </p>
+  </section>
+
+  <Faq items={FAQ} />
+</PageLayout>

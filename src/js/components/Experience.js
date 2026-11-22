@@ -33,6 +33,7 @@ export default class Experience {
     this.isMobile = this.getIsMobile()
 
     this.visible = true
+    this.paused = false
     this.time = 0
     this.raf = null
     this.measureRaf = null
@@ -165,10 +166,19 @@ export default class Experience {
   measure() {
     if (!this.cameraController) return
 
-    const maxScroll = Math.max(
+    // The galaxy belongs to the opening track only. Static content below the
+    // track (the SEO dossier) must not stretch the camera anchors.
+    const track = document.querySelector('#galaxy-track')
+    const trackRect = track?.getBoundingClientRect()
+    const trackBottom = trackRect
+      ? trackRect.bottom + window.scrollY
+      : document.documentElement.scrollHeight
+    const documentMax = Math.max(
       0,
       document.documentElement.scrollHeight - window.innerHeight,
     )
+
+    const maxScroll = Math.max(0, Math.min(documentMax, trackBottom - window.innerHeight))
     const viewport = window.innerHeight
     const last = this.galaxy.nodes.length - 1
 
@@ -221,6 +231,12 @@ export default class Experience {
 
     this.state.setActive(id)
     this.cameraController.focus(section.index)
+  }
+
+  /** Stop rendering while the visitor reads the static content below. */
+  setPaused(paused) {
+    this.paused = Boolean(paused)
+    if (!this.paused) this.clock?.getDelta()
   }
 
   setHover(index) {
@@ -319,7 +335,7 @@ export default class Experience {
     this.raf = requestAnimationFrame(this.draw)
 
     const dt = Math.min(this.clock.getDelta(), 0.05)
-    if (!this.visible) return
+    if (!this.visible || this.paused) return
 
     this.time += dt
 

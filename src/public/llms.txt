@@ -1,0 +1,26 @@
+# Raihan Ahmad Fathoni
+
+> AI Engineer dan Backend Developer yang berbasis di Jakarta Timur. Mahasiswa Informatika Universitas Gunadarma dengan IPK 3.99/4.00. Membangun sistem backend, platform LLM, dan tools yang dipakai ratusan pengguna.
+
+## Profil
+
+- Nama lengkap: Raihan Ahmad Fathoni
+- Peran: AI Engineer, Backend Developer, System Analyst
+- Lokasi: Jakarta Timur, DKI Jakarta, Indonesia
+- Pendidikan: Informatika, Universitas Gunadarma, IPK 3.99/4.00
+- Email: raintxhanx@gmail.com
+- GitHub: https://github.com/Raintxhanx
+- LinkedIn: https://www.linkedin.com/in/raintxhanx/
+
+## Halaman utama
+
+- [Beranda](https://raintxhanx.uk/): profil singkat dan proyek unggulan
+- [Tentang](https://raintxhanx.uk/tentang/): pendidikan, pengalaman, keahlian, FAQ
+- [Proyek](https://raintxhanx.uk/proyek/): studi kasus dan proyek lainnya
+- [Kontak](https://raintxhanx.uk/kontak/): email dan media sosial
+
+## Studi kasus
+
+- [Ticketing Management System](https://raintxhanx.uk/proyek/ticketing-management-system/): 687 praktikan, 1.300+ tiket
+- [Platform Chat LLM dengan Sistem Langganan](https://raintxhanx.uk/proyek/platform-chat-llm/): 200 concurrent users, 31 pengguna aktif saat rilis
+- [Asisten Laboratorium & Pembimbingan 90+ Praktikan](https://raintxhanx.uk/proyek/asisten-laboratorium/): AI, Pengolahan Citra, Algoritma

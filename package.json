@@ -1,24 +1,32 @@
 {
   "private": true,
   "name": "raihan-fathoni-portfolio",
-  "version": "1.0.0",
-  "description": "A 3D portfolio for Raihan Fathoni — AI, backend engineering and data. Built with Three.js, custom shaders and Vite.",
-  "author": "Raihan Fathoni",
+  "version": "2.0.0",
+  "description": "Portfolio and entity home for Raihan Ahmad Fathoni — AI engineering, backend and data. Static Astro site with a Three.js galaxy.",
+  "author": "Raihan Ahmad Fathoni",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "keywords": [
     "portfolio",
+    "astro",
     "threejs",
-    "vite",
     "webgl",
-    "shaders"
+    "seo",
+    "raihan-fathoni"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build --emptyOutDir",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler pages deploy dist --project-name raintxhanx-portfolio",
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "visual:check": "node scripts/visual-check.mjs",
+    "og": "node scripts/make-og.mjs",
     "start": "node server.mjs",
-    "preview": "vite preview",
-    "deploy": "vite build --emptyOutDir && gh-pages -d dist"
+    "legacy:start": "node server.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -26,6 +34,7 @@
     "@babel/plugin-proposal-class-properties": "^7.14.5",
     "@babel/preset-env": "^7.15.8",
     "@types/node": "^16.11.26",
+    "cheerio": "^1.2.0",
     "eslint": "^8.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -33,16 +42,17 @@
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
-    "gh-pages": "^5.0.0",
-    "glsl-noise": "^0.0.0",
-    "glslify": "^7.1.1",
     "prettier": "^2.5.1",
-    "rollup-plugin-glslify": "^1.3.1",
+    "puppeteer-core": "^25.18.1",
     "sass": "^1.58.0",
-    "stats-js": "^1.0.1",
-    "vite": "^4.0.1"
+    "sharp": "^0.35.5",
+    "wrangler": "^4.166.0"
   },
   "dependencies": {
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "astro": "^6.4.8",
     "gsap": "^3.11.3",
     "lil-gui": "^0.17.0",
     "three": "^0.149.0"

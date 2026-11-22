@@ -1,0 +1,25 @@
+---
+import { FAQ, type FaqItem } from '@/data/faq'
+
+interface Props {
+  items?: FaqItem[]
+  heading?: string
+}
+
+const { items = FAQ, heading = 'Pertanyaan yang Sering Diajukan' } = Astro.props
+---
+
+<section class="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">{heading}</h2>
+  <div class="faq__list">
+    {items.map((item, index) => (
+      <details class="faq__item" open={index === 0}>
+        <summary>
+          <span>{item.question}</span>
+          <span class="faq__icon" aria-hidden="true">+</span>
+        </summary>
+        <p>{item.answer}</p>
+      </details>
+    ))}
+  </div>
+</section>

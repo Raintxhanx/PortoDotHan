@@ -1,0 +1,62 @@
+---
+import type { FeaturedProject, OtherProject } from '@/data/projects'
+import { projectPath } from '@/data/projects'
+
+interface Props {
+  project: FeaturedProject | OtherProject
+  featured?: boolean
+  index?: number
+}
+
+const { project, featured = false, index = 1 } = Astro.props
+const isFeatured = 'slug' in project
+const href = isFeatured ? projectPath(project.slug) : project.url
+const external = !isFeatured
+---
+
+<article class:list={['project-card', { 'project-card--featured': featured }]}>
+  <a
+    class="project-card__media"
+    href={href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener' : undefined}
+    aria-label={external ? `${project.title} di GitHub` : `Baca studi kasus ${project.title}`}
+  >
+    <img
+      src={project.image}
+      alt={project.imageAlt}
+      width="1200"
+      height="630"
+      loading="lazy"
+      decoding="async"
+    />
+    {isFeatured && <span class="project-card__badge mono">Studi Kasus</span>}
+  </a>
+
+  <div class="project-card__body">
+    <div class="project-card__head">
+      <span class="project-card__num mono">{String(index).padStart(2, '0')}</span>
+      {isFeatured && <span class="project-card__period mono">{project.period}</span>}
+    </div>
+    <h3 class="project-card__title">
+      <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+        {project.title}
+      </a>
+    </h3>
+    <p class="project-card__desc">{project.description}</p>
+    <ul class="tags">
+      {project.stack
+        ? project.stack.map((tag) => <li>{tag}</li>)
+        : project.tags.map((tag) => <li>{tag}</li>)}
+    </ul>
+    {isFeatured ? (
+      <a class="project-card__link" href={href}>
+        <span>Baca studi kasus</span><span aria-hidden="true">↘</span>
+      </a>
+    ) : (
+      <a class="project-card__link" href={href} target="_blank" rel="noopener">
+        <span>Lihat di GitHub</span><span aria-hidden="true">↗</span>
+      </a>
+    )}
+  </div>
+</article>

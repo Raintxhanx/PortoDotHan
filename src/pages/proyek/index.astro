@@ -1,0 +1,101 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+import { FEATURED_PROJECTS, OTHER_PROJECTS, projectPath } from '@/data/projects'
+import {
+  breadcrumbSchema,
+  collectionPageSchema,
+  graph,
+  organizationSchema,
+  personSchema,
+  websiteSchema,
+} from '@/lib/schema'
+
+const path = '/proyek/'
+const breadcrumbs = [
+  { name: 'Beranda', href: '/' },
+  { name: 'Proyek' },
+]
+
+const allItems = [
+  ...FEATURED_PROJECTS.map((project) => ({
+    name: project.title,
+    href: projectPath(project.slug),
+  })),
+  ...OTHER_PROJECTS.map((project) => ({
+    name: project.title,
+    href: project.url,
+  })),
+]
+
+const schema = graph(
+  websiteSchema(),
+  personSchema(),
+  organizationSchema(),
+  collectionPageSchema({
+    path,
+    name: 'Proyek & Studi Kasus — Raihan Ahmad Fathoni',
+    description:
+      'Studi kasus dan proyek AI, backend, web, serta otomasi yang dikerjakan Raihan Ahmad Fathoni.',
+    items: allItems,
+  }),
+  breadcrumbSchema(path, breadcrumbs),
+)
+
+const seo = {
+  title: 'Proyek & Studi Kasus — Raihan Ahmad Fathoni',
+  description:
+    'Studi kasus Ticketing Management System, platform chat LLM, dan asisten laboratorium Informatika Gunadarma, plus proyek AI, web, dan otomasi lainnya.',
+  path,
+  image: '/og/projects.png',
+  type: 'website' as const,
+  jsonLd: schema,
+}
+---
+
+<PageLayout
+  seo={seo}
+  active="proyek"
+  eyebrow="Portofolio"
+  heading="Proyek & Studi Kasus"
+  lede="Tiga pekerjaan dengan konteks lengkap — masalah, proses, keputusan teknis, dan hasil. Sisanya adalah tools yang lebih kecil namun tetap nyata."
+  breadcrumbs={breadcrumbs}
+  variant="wide"
+>
+  <section aria-labelledby="studi-title">
+    <h2 id="studi-title">Studi kasus unggulan</h2>
+    <p>
+      Setiap studi kasus menjelaskan masalah awal, batasan yang dihadapi, peran
+      Raihan, arsitektur yang dipilih, dan hasil yang bisa diverifikasi. Tujuannya
+      bukan memamerkan teknologi, tetapi menunjukkan cara berpikir dan cara kerja.
+    </p>
+    <div class="project-grid">
+      {FEATURED_PROJECTS.map((project, index) => (
+        <ProjectCard project={project} featured index={index + 1} />
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="lain-title">
+    <h2 id="lain-title">Proyek lainnya</h2>
+    <p>
+      Proyek-proyek ini lebih kecil, tetapi tetap menggambarkan minat yang sama:
+      AI, data, otomasi, dan antarmuka yang membuat hal rumit terasa sederhana.
+    </p>
+    <div class="project-grid project-grid--compact">
+      {OTHER_PROJECTS.map((project, index) => (
+        <ProjectCard project={project} index={index + 1} />
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="repo-title">
+    <h2 id="repo-title">Repositori</h2>
+    <p>
+      Kode dan eksperimen lain tersedia di
+      <a href="https://github.com/Raintxhanx?tab=repositories" target="_blank" rel="noopener">GitHub @Raintxhanx</a>.
+      Untuk pertanyaan tentang implementasi atau kolaborasi, silakan
+      <a href="/kontak/">hubungi Raihan</a>.
+    </p>
+  </section>
+</PageLayout>

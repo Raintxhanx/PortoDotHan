@@ -152,7 +152,7 @@ em {
   transform: none;
 }
 
-[data-reveal] {
+html.js [data-reveal] {
   opacity: 0;
   transform: translateY(30px);
   transition:
@@ -160,9 +160,28 @@ em {
     transform 1s var(--ease) var(--d, 0s);
 }
 
-[data-reveal].is-in {
+html.js [data-reveal].is-in {
   opacity: 1;
   transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── ambient backdrop ─────────────────────────────────────── */

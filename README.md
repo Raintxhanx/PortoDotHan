@@ -1,170 +1,210 @@
-# Raihan Fathoni — 3D Portfolio
+# Raihan Ahmad Fathoni — Portfolio & Entity Home
 
-> “Hanya manusia biasa yang bahagia dengan hal-hal kecil.”
-> *Just an ordinary human, happy with small things.*
+> “Manusia biasa, bahagia dengan hal-hal kecil.”
+> *An ordinary human, happy with small things.*
 
-An interactive 3D portfolio for **Raihan Fathoni** ([@Raintxhanx](https://github.com/Raintxhanx)) — a student and beginner developer working across AI, backend engineering and data.
+A static portfolio and entity home for **Raihan Ahmad Fathoni** ([@Raintxhanx](https://github.com/Raintxhanx)) — AI Engineer and Backend Developer based in Jakarta Timur.
 
-The centrepiece is a generative spiral galaxy built in Three.js. Six chapter nodes (hero, about, toolkit, work, now, contact) sit on spiral arms, and a scroll-driven camera flies along a `CatmullRomCurve3` spline through them. Chapter markers project into the DOM as a floating HUD card, with a collapsed bottom sheet on phones. Portfolio content stays as normal HTML — the galaxy is a navigational background, not a replacement for the copy.
+The site is generated with **Astro** and deployed as static assets on **Cloudflare Pages**. There is no Node runtime in production. The homepage keeps the Three.js galaxy; every other page is plain editorial HTML with zero 3D JavaScript.
 
-- **One draw call for the galaxy** — a single `BufferGeometry` + `ShaderMaterial` renders ~100k dust particles (28k on mobile). Radius, branches, randomness, randomness power, thickness, spiral winding and inside/outside colours are all exposed in `src/js/galaxy/galaxyConfig.js`.
-- **Scroll-driven camera** — measured `<section>` anchors map scroll position to a point on the camera/look spline, so the camera reaches each node exactly when its chapter is centred.
-- **Raycast fly-to** — click or tap a chapter node (`THREE.Raycaster` against generous hit spheres) and the camera eases to that waypoint; scroll is temporarily locked mid-flight so chapters don't flash past.
-- **Projected DOM HUD** — 3D nodes are projected with `vector.project(camera)` and rendered as ordinary HTML markers/card via `translate3d`; the card auto-anchors left/right/top/bottom so it never clips off a viewport edge.
-- **Rich chapter card** — each chapter injects its own copy (bio, honest toolkit levels, six projects, current focus, contact links) into the orbit card; the CTA walks to the next chapter and loops home from Contact.
-- **Mobile** (`<768px`) — fewer particles, DPR capped at 2, projected markers hidden, the card becomes a bottom sheet that is invisible at Origin, shows a compact chapter title, expands on tap/swipe, and keeps a sticky next-chapter CTA.
-- **Intro marquee** — six identical flex groups make a pixel-perfect `-50%` loop at any width; the strip is vertically centred in the intro and fades out as soon as the hero leaves the viewport, returning when you scroll home.
-- **Performance watchdog** — degrades below 45 FPS: tier 1 cuts particles to 65k and DPR to 1; tier 2 cuts to 40k and hides the starfield. Never restores quality (avoids oscillation).
-- **Accessibility** — keyboard focus on markers and card, `inert` on collapsed card body, dynamic ARIA labels, reduced-motion support (frozen shader time, instant fly-to), skip-to-content link, no-WebGL fallback.
-- The rest of the portfolio is unchanged: editorial layout (Instrument Serif + Space Grotesk + JetBrains Mono), Gravida case studies, Jakarta clock, wish easter egg, generative ambient audio.
+## What is in here
 
-## ⚙️ Stack
+- **Server-rendered static HTML** for every route: home, about, projects, three case studies, contact and 404.
+- **Entity SEO**: consistent name/bio, `Person`, `WebSite`, `Organization`, `ProfilePage`, `Article`, `SoftwareApplication`, `FAQPage` and `BreadcrumbList` JSON-LD.
+- **Technical SEO**: canonical URLs, absolute Open Graph/Twitter images, `robots.txt`, generated `sitemap.xml`, Cloudflare `_headers`/`_redirects`, and a build-time audit.
+- **The galaxy**: a generative Three.js spiral with a scroll-driven camera and a projected DOM HUD. It is lazily loaded on the homepage only.
+- **A static dossier** below the galaxy so crawlers and recruiters can read the profile, projects, skills and contact details without JavaScript.
+- **Performance work**: no artificial loader, self-hosted fonts, lazy audio, deferred Three.js, and no 3D bundle on subpages.
+
+## Stack
 
 | Layer | Tool |
 | --- | --- |
+| Static site | [Astro](https://astro.build/) |
 | 3D | [Three.js](https://threejs.org/) + custom GLSL |
-| Build | [Vite](https://vitejs.dev/) |
 | Styles | [Sass](https://sass-lang.com/) |
-| Type | Instrument Serif, Space Grotesk, JetBrains Mono |
-| Audio | WebAudio API (no files) |
-| Deploy | `gh-pages` / Docker (Node) |
+| Type | Instrument Serif, Space Grotesk, JetBrains Mono (self-hosted via Fontsource) |
+| Hosting | Cloudflare Pages |
+| Audit | `scripts/seo-audit.mjs` (Cheerio) |
 
-## 🚀 Run it
+## Run it
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the printed local URL. To build for production:
+Open the printed local URL.
 
 ```bash
-npm run build
-npm start     # serves dist/ on http://localhost:8080
+npm run build      # static output in dist/
+npm run preview    # preview the production build on :4321
+npm run seo:audit  # crawl dist/ and assert titles, canonicals, schema, sitemap, links
+npm run og         # regenerate the 1200×630 social cards and icons
 ```
 
-### Debug hook
+The audit expects a built `dist/`. Run `npm run build` first.
 
-Add `?debug=1` to the URL to expose `window.__experience` (the `Experience` instance) for browser-console testing of camera state, galaxy nodes and the UI projector.
+With `npm run preview` running in another terminal, `npm run visual:check` uses the installed Chrome to screenshot the home, dossier, about, projects, case study and contact pages, and reports LCP/CLS, console errors, whether the audio is fetched on load, and whether subpages fetch the 3D chunk. Set `CHROME_PATH` if Chrome is not in the default Windows location.
 
-```bash
-# production build, served from dist/
-npm run build
-npm start
-# open http://localhost:8080/?debug=1
-```
+## Deploy to Cloudflare Pages
 
-Deploy to GitHub Pages:
+Production is **Cloudflare Pages**, not the Node server.
 
 ```bash
 npm run deploy
 ```
 
-The build uses relative asset paths (`base: './'`), so it also works from a subdirectory or any static host.
+`wrangler.toml` points at `./dist`. You can also connect the Git repository in the Cloudflare dashboard and use:
 
-### 🐳 Docker (production)
+- Build command: `npm run build`
+- Output directory: `dist`
+- Node version: 22.12 or newer (`.nvmrc` pins Node 22)
 
-The image is a multi-stage build: Vite compiles the site, then a small dependency-free Node server (`server.mjs`) serves the static output as a non-root user on port `8080`. Use `npm run dev` for hot reload; the container always serves the production build.
+`src/public/_headers` is applied by Pages for cache and security headers. `src/public/_redirects` keeps old English URLs working and normalizes trailing slashes:
+
+```text
+/about/*    → /tentang/:splat
+/work/*     → /proyek/:splat
+/contact/*  → /kontak/:splat
+/projects/* → /proyek/:splat
+```
+
+### Legacy local server
+
+`server.mjs` and the Docker files are kept only as a local fallback. They are **not** part of the production path anymore.
 
 ```bash
-docker compose build
-docker compose up -d
+npm start          # serves dist/ with server.mjs on :8080
+docker compose up  # legacy container preview
 ```
 
-The port is published to `127.0.0.1:8091` only, so the site is not exposed to the network. Point your Cloudflare Tunnel at it:
+## Routes
 
-```bash
-cloudflared tunnel --url http://localhost:8091
-```
+| Route | Content |
+| --- | --- |
+| `/` | Galaxy hero + static dossier (profile, metrics, projects, skills, contact) |
+| `/tentang/` | Bio, education, experience, skills, FAQ |
+| `/proyek/` | Featured case studies + other GitHub projects |
+| `/proyek/ticketing-management-system/` | 687 praktikan, 1.300+ tiket |
+| `/proyek/platform-chat-llm/` | 200 concurrent users, 31 active at launch |
+| `/proyek/asisten-laboratorium/` | 90+ praktikan, AI / Pengolahan Citra / Algoritma |
+| `/kontak/` | Email, socials, location, availability |
+| `/404.html` | Noindex not-found page |
+| `/sitemap.xml` | Generated from the route manifest |
+| `/robots.txt` | Crawl rules + sitemap + AI crawler allowlist |
 
-Or in a tunnel config (`~/.cloudflared/config.yml`):
+## Structure
 
-```yaml
-ingress:
-  - hostname: example.com
-    service: http://localhost:8080
-  - service: http_status:404
-```
-
-If `cloudflared` later runs as a container on this Compose network, point it at the service directly (`http://web:8080`) and skip the host port entirely.
-
-Set `APP_PORT` to publish a different port. If the tunnel or a proxy runs in another container/network and needs to reach it from outside the host, set `BIND_ADDR=0.0.0.0`:
-
-```dotenv
-APP_PORT=3000
-BIND_ADDR=0.0.0.0
-```
-
-Stop it with `docker compose down`. Without Compose:
-
-```bash
-docker build -t portodothan .
-docker run --rm -p 127.0.0.1:8091:8080 portodothan
-```
-
-The container runs with a read-only filesystem, no Linux capabilities and a health check on `/healthz`. `server.mjs` handles SPA routing, long-lived caching for hashed assets, ETags and byte ranges for audio; TLS and compression are handled by Cloudflare.
-
-## 🗂 Structure
-
-```
+```text
 src/
-├─ index.html            # content + semantic structure; #orbit HUD markup
-├─ js/
-│  ├─ index.js           # boot, loader, scroll state, interactions, nav
-│  ├─ components/
-│  │  ├─ Experience.js   # Three.js renderer/scene/render loop, anchor measure
-│  │  ├─ Cursor.js       # custom cursor + magnetic elements; Fly ✦ state
-│  │  └─ Ambient.js      # generative WebAudio pad
-│  └─ galaxy/
-│     ├─ CameraController.js   # CatmullRom spline, scroll interp, fly-to, raycast
-│     ├─ GalaxyEngine.js       # dust buffer, shaders, nodes, nebula, starfield
-│     ├─ UIProjector.js        # 3D→DOM projection, compact card, mobile bottom sheet
-│     ├─ PerformanceMonitor.js # FPS watchdog + progressive quality degradation
-│     ├─ PortfolioState.js     # active-chapter store + events
-│     ├─ galaxyConfig.js       # galaxy constants, spiral math, six chapter defs
-│     ├─ shaders.js            # galaxy + node GLSL
-│     └─ index.js (not present; galaxy modules imported by Experience)
-├─ scss/
-│  ├─ style.scss         # entry
-│  ├─ _tokens.scss       # colour, type, motion tokens
-│  ├─ _base.scss         # reset, ambient backdrop, marquee
-│  ├─ _chrome.scss       # loader, nav, menu, cursor, toast
-│  ├─ _hero.scss
-│  ├─ _about.scss
-│  ├─ _toolkit.scss
-│  ├─ _work.scss
-│  ├─ _now.scss
-│  ├─ _contact.scss
-│  ├─ _responsive.scss
-│  └─ _galaxy.scss       # orbit HUD, markers, card, mobile sheet, scene veil
-└─ public/img/           # avatar, favicon, optimised project stills
+├─ data/
+│  ├─ site.ts              # single source of truth: name, bio, roles, socials
+│  ├─ projects.ts          # featured + other projects
+│  └─ faq.ts               # concise Indonesian FAQ answers
+├─ lib/schema.ts           # JSON-LD builders
+├─ layouts/
+│  ├─ BaseLayout.astro     # head, header, menu, footer, scripts
+│  ├─ PageLayout.astro     # editorial page shell
+│  └─ CaseStudyLayout.astro
+├─ components/             # Seo, Header, Menu, Footer, Breadcrumbs, ProjectCard, Faq
+├─ pages/
+│  ├─ index.astro          # galaxy + static dossier
+│  ├─ tentang/index.astro
+│  ├─ proyek/index.astro
+│  ├─ proyek/*.md          # long-form case studies
+│  ├─ kontak/index.astro
+│  ├─ 404.astro
+│  └─ sitemap.xml.ts
+├─ scripts/
+│  ├─ site.js              # UI, clock, menu, audio, lazy galaxy import
+│  └─ home.js              # Three.js scene, palette, dossier hand-off
+├─ js/                     # existing galaxy engine and shaders
+├─ scss/                   # existing editorial styles + _pages.scss
+└─ public/                 # favicon, images, audio, robots, _headers, _redirects
+scripts/
+├─ seo-audit.mjs
+├─ make-og.mjs
+└─ visual-check.mjs        # local Puppeteer smoke test
 ```
 
-## 🎮 Controls
+## SEO notes
+
+### Entity consistency
+
+The canonical paragraph is in `src/data/site.ts` and is reused by the homepage, `/tentang/`, `Person.description`, and the FAQ. Use the same paragraph on LinkedIn and GitHub. Keep the name **Raihan Ahmad Fathoni** everywhere; `Raihan Fathoni` and `raintxhanx` are only alternate names.
+
+### Source of truth for facts
+
+The case studies use the metrics from the project brief: IPK 3.99/4.00, 687 praktikan, 1.300+ tiket, 200 concurrent users, 31 active users at launch, and 90+ mentees. If a number or role changes, update the Markdown frontmatter and the data files together — the audit checks word count and schema, not factual accuracy.
+
+The tech stack is described generically (backend, database, REST API, queue) because the original brief did not name frameworks. Add concrete tools only when they can be confirmed. The case-study periods (2025, 2026, 2024–2025) are placeholders from the brief and should be checked before publishing.
+
+The three case studies currently use typographic covers in `src/public/og/` because original screenshots were not supplied. Replace them with real screenshots (and keep a 1200×630 version for social sharing) when available.
+
+### Structured data
+
+- `Person` and `WebSite` use stable `@id`s: `https://raintxhanx.uk/#person` and `https://raintxhanx.uk/#website`.
+- Case studies include `Person`, `Organization`, `WebSite`, `WebPage`, `Article`, optional `SoftwareApplication`, and `BreadcrumbList`.
+- `FAQPage` is only on `/tentang/`.
+- `Article.publisher` uses the `Organization` node with a square logo; `author` references the `Person` node.
+- `SoftwareApplication` intentionally has no fake `offers` or `aggregateRating`. It is entity markup, not a promise of a rich result.
+- Google limits FAQ rich results for most sites; `FAQPage` still helps machine-readable answers.
+
+Validate with the [Rich Results Test](https://search.google.com/test/rich-results) and [Schema Markup Validator](https://validator.schema.org/). `Person`/`ProfilePage` will not show a rich result; “no errors” is the goal.
+
+### Core Web Vitals
+
+The homepage dynamically imports the Three.js chunk after first paint. Subpages ship no 3D. The custom loader was removed; the H1 is visible in the first paint; fonts are self-hosted; the 6.5 MB audio file is only created when the visitor presses “Suara”.
+
+Run PageSpeed Insights on the deployed URL. Target: mobile score ≥ 80, LCP < 2.5 s, CLS < 0.1, INP < 200 ms. The galaxy is intentionally heavy; subpages should score much higher.
+
+### Cloudflare custom domain
+
+Use `raintxhanx.uk` as the canonical host. Add a Cloudflare Redirect Rule (or a Page Rule) so `www.raintxhanx.uk/*` 301s to `https://raintxhanx.uk/$1`. `_redirects` only handles paths, not hosts.
+
+### Google Search Console checklist
+
+1. Add `raintxhanx.uk` as a **Domain property** via DNS TXT (Cloudflare DNS), or use the URL-prefix property with an HTML verification file in `src/public/`.
+2. If using the meta tag, set `PUBLIC_GOOGLE_SITE_VERIFICATION` in the Pages environment and redeploy.
+3. Submit `https://raintxhanx.uk/sitemap.xml`.
+4. Use URL Inspection for `/`, `/tentang/`, `/proyek/`, the three case studies, and `/kontak/` (7 URLs, under the 10/day limit).
+5. After 7/14/30 days, check Coverage, Performance, and Core Web Vitals.
+6. Confirm `site:raintxhanx.uk` returns at least four pages.
+
+**Cloudflare managed robots.txt:** if the dashboard has “Managed robots.txt” / AI Crawl Control enabled, it can override `src/public/robots.txt`. Check `curl https://raintxhanx.uk/robots.txt` after deploy. If it still shows the Cloudflare content-signals comment block, disable the managed file in the dashboard.
+
+### Off-page checklist (manual)
+
+- LinkedIn: website field → `https://raintxhanx.uk`; About uses the same bio paragraph.
+- GitHub: profile bio, profile README, and pinned repositories link to the site.
+- Universitas Gunadarma directory/alumni profile, if available.
+- Repository READMEs link back to the portfolio.
+- Verify each link is publicly visible and indexable. Do not buy backlinks.
+
+## Controls
 
 | Input | Action |
 | --- | --- |
-| Scroll | Camera flies along the galaxy spline through the chapters |
-| Click/tap a node | Smooth fly-to that chapter (scroll locked mid-flight) |
-| Click a nav link / anchor | Same fly-to via `focusSection` |
-| Hover/focus a marker | Marker expands into a labeled pill; cursor shows `Fly ✦` |
-| Hover/focus the card | Compact card expands to show blurb, meta and CTA |
-| Mobile | Bottom sheet: tap toggle to expand/collapse chapter details |
-| Keyboard | `Tab` moves focus between markers and card controls; `Escape` closes menu/wish |
-| `prefers-reduced-motion` | Shader animation frozen, fly-to instant, reveals skip animation |
+| Scroll | Camera flies along the galaxy spline |
+| Click/tap a node | Fly to that chapter |
+| Orbit CTA | Next chapter / back to origin |
+| Nav links | Real page navigation (`/tentang/`, `/proyek/`, `/kontak/`) |
+| Mobile | Bottom-sheet chapter card |
+| Keyboard | Tab through markers and controls; Escape closes the menu |
+| `prefers-reduced-motion` | Shader frozen, fly-to instant, reveals skipped |
+| `?debug=1` | Exposes `window.__experience` on the homepage |
 
-## 🧠 Architecture notes
+## Architecture notes
 
-- `Experience.js` owns the renderer, scene, camera and the single `requestAnimationFrame` loop. It measures `<section data-scene>` anchors (never `body[data-scene]`) and hands them to `CameraController`. Nothing is allocated inside the render loop.
-- `GalaxyEngine.js` builds the one dust `BufferGeometry` + `ShaderMaterial`, plus the node points, nebula sprites and starfield. It owns GPU resources only — no DOM, no camera.
-- `CameraController.js` builds camera/look `CatmullRomCurve3` paths from node positions, interpolates `u` from scroll, performs `THREE.Raycaster` picking, and eases fly-to with a custom `easeInOutCubic` (no GSAP).
-- `UIProjector.js` projects node positions into screen space each frame, writes `translate3d` to markers/card, auto-anchors the card, and manages compact/expanded card state plus the mobile bottom sheet and `inert`/ARIA handling.
-- `PortfolioState.js` is the single active-chapter store; `PerformanceMonitor.js` progressively degrades quality below 45 FPS.
-- GLSL is inlined as template strings (no glslify). `?debug=1` exposes `window.__experience` for testing.
+- `Experience.js` owns the renderer, scene, camera and the single `requestAnimationFrame` loop. It measures anchors only inside `#galaxy-track`, so the static dossier below cannot stretch the camera path.
+- `home.js` pauses the render loop when the dossier enters the viewport and adds `body.galaxy-done` to fade the fixed scene/HUD.
+- `site.js` is the only script loaded on subpages. It handles the clock, menu, cursor, copy, reveals and scroll chrome, then dynamically imports `home.js` on the homepage.
+- `GalaxyEngine.js` owns GPU resources only; `CameraController.js` owns scroll interpolation, raycast picking and fly-to; `UIProjector.js` owns the DOM HUD.
+- `PerformanceMonitor.js` progressively degrades quality below 45 FPS.
+- GLSL is inlined as template strings, so the old glslify plugin is no longer needed.
 
-Project screenshots were converted from the originals in the [Raintxhanx profile repo](https://github.com/Raintxhanx/Raintxhanx) to lightweight WebP stills (the source GIFs were 12–43 MB). Skill levels are deliberately honest — “beginner” and “learning” are part of the story, not a disclaimer.
-
-## 📬 Contact
+## Contact
 
 - Email — [raintxhanx@gmail.com](mailto:raintxhanx@gmail.com)
 - GitHub — [github.com/Raintxhanx](https://github.com/Raintxhanx)
@@ -172,4 +212,4 @@ Project screenshots were converted from the originals in the [Raintxhanx profile
 
 ---
 
-Built with Three.js, curiosity and too much coffee.
+Built with Three.js, Astro, curiosity and too much coffee.

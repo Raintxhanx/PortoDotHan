@@ -57,6 +57,22 @@
   text-transform: uppercase;
 }
 
+/* The full legal name needs three lines instead of two, so cap the size. */
+.hero__title--full {
+  font-size: clamp(3.2rem, 10.8vw, 10.5rem);
+}
+
+.hero__role {
+  margin-top: clamp(18px, 2.2vw, 28px);
+  font-family: var(--mono);
+  font-size: clamp(0.68rem, 0.92vw, 0.82rem);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
 .hero__line {
   display: block;
   overflow: hidden;
@@ -68,8 +84,17 @@
   transform: translateY(112%);
 }
 
-body.is-ready .hero__word {
-  animation: rise 1.35s var(--ease) 0.15s forwards;
+/* Animate without waiting for JavaScript, so the H1 is painted immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__word {
+    animation: rise 0.9s var(--ease) 0.05s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__word {
+    transform: none;
+  }
 }
 
 .hero__line--serif {
@@ -93,8 +118,17 @@ body.is-ready .hero__word {
   transform: translateY(16%);
 }
 
-body.is-ready .hero__line--serif em {
-  animation: serifReveal 1.5s var(--ease) 0.38s forwards;
+@media (prefers-reduced-motion: no-preference) {
+  .hero__line--serif em {
+    animation: serifReveal 1s var(--ease) 0.18s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__line--serif em {
+    clip-path: none;
+    transform: none;
+  }
 }
 
 @keyframes serifReveal {

@@ -1,0 +1,49 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import Breadcrumbs from '@/components/Breadcrumbs.astro'
+
+type JsonLdObject = Record<string, unknown>
+
+interface Props {
+  seo: {
+    title: string
+    description: string
+    path: string
+    image?: string
+    type?: 'website' | 'profile' | 'article'
+    noindex?: boolean
+    published?: string | Date
+    modified?: string | Date
+    jsonLd?: JsonLdObject[]
+  }
+  active?: string
+  eyebrow?: string
+  heading: string
+  lede?: string
+  breadcrumbs: { name: string; href?: string }[]
+  variant?: string
+}
+
+const { seo, active = '', eyebrow = '', heading, lede, breadcrumbs, variant = '' } = Astro.props
+---
+
+<BaseLayout seo={seo} active={active}>
+  <article class:list={['page', 'wrap', { [`page--${variant}`]: variant }]}>
+    <Breadcrumbs items={breadcrumbs} />
+
+    <header class="page__head">
+      {eyebrow && <p class="page__eyebrow mono">{eyebrow}</p>}
+      <h1 class="page__title">{heading}</h1>
+      {lede && <p class="page__lede">{lede}</p>}
+      <slot name="meta" />
+    </header>
+
+    <slot name="media" />
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <slot name="after" />
+  </article>
+</BaseLayout>

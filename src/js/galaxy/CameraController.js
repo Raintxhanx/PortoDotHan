@@ -139,6 +139,10 @@ export default class CameraController {
       list.push(Math.max(value, previous + 1))
       return list
     }, [])
+
+    // The galaxy track can end before the document does (the homepage dossier
+    // continues below it). Cache its maximum scroll so fly-to never escapes it.
+    this.scrollMax = this.anchors[this.anchors.length - 1] ?? 0
   }
 
   updateTargetFromScroll() {
@@ -226,6 +230,7 @@ export default class CameraController {
   }
 
   maxScroll() {
+    if (Number.isFinite(this.scrollMax)) return this.scrollMax
     return Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
   }
 
